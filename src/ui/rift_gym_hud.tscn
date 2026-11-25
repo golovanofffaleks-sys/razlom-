@@ -1,0 +1,111 @@
+[gd_scene load_steps=6 format=3]
+
+[ext_resource type="PackedScene" path="res://src/ui/combat_gym_hud.tscn" id="1"]
+[ext_resource type="Script" path="res://src/ui/rift_gym_hud.gd" id="2"]
+
+[sub_resource type="StyleBoxFlat" id="CastTrack"]
+bg_color = Color(0.109, 0.18, 0.19, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
+[sub_resource type="StyleBoxFlat" id="CastFill"]
+bg_color = Color(0.36, 0.89, 0.70, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
+[sub_resource type="StyleBoxFlat" id="SubtitleCard"]
+content_margin_left = 28.0
+content_margin_top = 11.0
+content_margin_right = 28.0
+content_margin_bottom = 13.0
+bg_color = Color(0.04, 0.047, 0.085, 0.93)
+border_width_bottom = 1
+border_color = Color(0.62, 0.46, 0.78, 0.8)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+shadow_color = Color(0, 0, 0, 0.4)
+shadow_size = 7
+
+[node name="RiftGymHud" instance=ExtResource("1")]
+script = ExtResource("2")
+
+[node name="Name" parent="Screen/Title/Content" index="0"]
+text = "Малый Разлом"
+
+[node name="RiftStatus" type="Label" parent="Screen/Title/Content" index="6"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 15
+text = "Разлом открыт · скоро первая волна"
+
+[node name="Heading" parent="Screen/TuningPanel/Content" index="0"]
+text = "Настройки Разлома"
+
+[node name="AimLabel" parent="Screen" index="4"]
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = 24.0
+offset_bottom = 48.0
+
+[node name="CastPanel" type="PanelContainer" parent="Screen" index="5"]
+unique_name_in_owner = true
+visible = false
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -166.0
+offset_top = -270.0
+offset_right = 166.0
+offset_bottom = -195.0
+mouse_filter = 2
+
+[node name="Content" type="VBoxContainer" parent="Screen/CastPanel"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="Title" type="Label" parent="Screen/CastPanel/Content"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.71, 1, 0.89, 1)
+theme_override_font_sizes/font_size = 18
+text = "Печать Баланса"
+horizontal_alignment = 1
+
+[node name="SealProgress" type="ProgressBar" parent="Screen/CastPanel/Content"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 8)
+layout_mode = 2
+mouse_filter = 2
+theme_override_styles/background = SubResource("CastTrack")
+theme_override_styles/fill = SubResource("CastFill")
+max_value = 1.0
+step = 0.0
+show_percentage = false
+
+[node name="Subtitle" type="PanelContainer" parent="Screen" index="6"]
+unique_name_in_owner = true
+visible = false
+anchor_left = 0.20
+anchor_top = 1.0
+anchor_right = 0.80
+anchor_bottom = 1.0
+offset_top = -168.0
+offset_bottom = -107.0
+grow_vertical = 0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("SubtitleCard")
+
+[node name="SubtitleText" type="Label" parent="Screen/Subtitle"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.94, 0.88, 1, 1)
+theme_override_font_sizes/font_size = 19
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3

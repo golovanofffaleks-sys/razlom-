@@ -1,0 +1,247 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://src/enemies/rift_minion.gd" id="1"]
+[ext_resource type="Script" path="res://src/components/health_component.gd" id="2"]
+[ext_resource type="Script" path="res://src/components/hurtbox_component.gd" id="3"]
+[ext_resource type="Resource" path="res://src/resources/rift_tuning.tres" id="4"]
+[ext_resource type="Shader" path="res://src/ui/enemy_vitals.gdshader" id="5"]
+[ext_resource type="AudioStream" path="res://assets/audio/posture_break.wav" id="6"]
+[ext_resource type="Script" path="res://src/components/aether_core.gd" id="7"]
+
+[sub_resource type="ShaderMaterial" id="VitalsMaterial"]
+shader = ExtResource("5")
+
+[sub_resource type="QuadMesh" id="VitalsMesh"]
+material = SubResource("VitalsMaterial")
+size = Vector2(0.96, 0.15)
+
+[sub_resource type="CapsuleShape3D" id="BodyShape"]
+radius = 0.39
+height = 1.74
+
+[sub_resource type="StandardMaterial3D" id="Armor"]
+albedo_color = Color(0.20, 0.17, 0.28, 1)
+metallic = 0.52
+roughness = 0.42
+
+[sub_resource type="StandardMaterial3D" id="Cloth"]
+albedo_color = Color(0.115, 0.07, 0.15, 1)
+roughness = 0.86
+
+[sub_resource type="StandardMaterial3D" id="Crystal"]
+albedo_color = Color(0.42, 0.21, 0.54, 1)
+metallic = 0.65
+emission_enabled = true
+emission = Color(0.56, 0.11, 0.88, 1)
+emission_energy_multiplier = 0.8
+
+[sub_resource type="StandardMaterial3D" id="Eyes"]
+resource_local_to_scene = true
+shading_mode = 0
+albedo_color = Color(0.62, 0.25, 0.89, 1)
+emission_enabled = true
+emission = Color(0.78, 0.20, 1, 1)
+emission_energy_multiplier = 2.4
+
+[sub_resource type="StandardMaterial3D" id="Telegraph"]
+transparency = 1
+shading_mode = 0
+cull_mode = 2
+albedo_color = Color(1, 0.31, 0.055, 0.40)
+
+[sub_resource type="CylinderMesh" id="Torso"]
+material = SubResource("Armor")
+top_radius = 0.38
+bottom_radius = 0.22
+height = 0.61
+radial_segments = 5
+
+[sub_resource type="CylinderMesh" id="Tunic"]
+material = SubResource("Cloth")
+top_radius = 0.20
+bottom_radius = 0.32
+height = 0.48
+radial_segments = 6
+
+[sub_resource type="SphereMesh" id="Helm"]
+material = SubResource("Armor")
+radius = 0.24
+height = 0.52
+radial_segments = 6
+rings = 3
+
+[sub_resource type="BoxMesh" id="EyeSlit"]
+size = Vector3(0.28, 0.050, 0.06)
+
+[sub_resource type="BoxMesh" id="Limb"]
+material = SubResource("Armor")
+size = Vector3(0.15, 0.52, 0.18)
+
+[sub_resource type="PrismMesh" id="Shard"]
+material = SubResource("Crystal")
+size = Vector3(0.25, 0.88, 0.16)
+
+[sub_resource type="SphereShape3D" id="CoreShape"]
+radius = 0.168
+
+[sub_resource type="StandardMaterial3D" id="CoreViolet"]
+albedo_color = Color(0.78, 0.34, 0.97, 1)
+metallic = 0.36
+roughness = 0.30
+emission_enabled = true
+emission = Color(0.66, 0.16, 1, 1)
+emission_energy_multiplier = 3.25
+
+[sub_resource type="StandardMaterial3D" id="CoreGold"]
+albedo_color = Color(1, 0.74, 0.26, 1)
+metallic = 0.8
+roughness = 0.33
+emission_enabled = true
+emission = Color(1, 0.52, 0.12, 1)
+emission_energy_multiplier = 1.6
+
+[sub_resource type="SphereMesh" id="CoreCrystal"]
+material = SubResource("CoreViolet")
+radius = 0.13
+height = 0.31
+radial_segments = 6
+rings = 2
+
+[sub_resource type="TorusMesh" id="CoreMount"]
+material = SubResource("CoreGold")
+inner_radius = 0.134
+outer_radius = 0.183
+rings = 12
+ring_segments = 6
+
+[node name="RiftMinion" type="CharacterBody3D" groups=["lock_on_targets"]]
+collision_layer = 4
+collision_mask = 7
+script = ExtResource("1")
+tuning = ExtResource("4")
+
+[node name="BodyCollider" type="CollisionShape3D" parent="."]
+position = Vector3(0, 0.87, 0)
+shape = SubResource("BodyShape")
+
+[node name="Health" type="Node" parent="."]
+script = ExtResource("2")
+max_health = 84.0
+
+[node name="Hurtbox" type="Area3D" parent="." node_paths=PackedStringArray("health")]
+position = Vector3(0, 0.87, 0)
+collision_layer = 16
+collision_mask = 0
+monitoring = false
+script = ExtResource("3")
+health = NodePath("../Health")
+
+[node name="Collider" type="CollisionShape3D" parent="Hurtbox"]
+shape = SubResource("BodyShape")
+
+[node name="Telegraph" type="MeshInstance3D" parent="."]
+visible = false
+position = Vector3(0, 0.032, 0)
+material_override = SubResource("Telegraph")
+cast_shadow = 0
+
+[node name="Visual" type="Node3D" parent="."]
+
+[node name="Torso" type="MeshInstance3D" parent="Visual"]
+position = Vector3(0, 1.14, 0)
+scale = Vector3(1, 1, 0.70)
+mesh = SubResource("Torso")
+
+[node name="AetherCore" type="Area3D" parent="Visual" node_paths=PackedStringArray("hurtbox")]
+position = Vector3(0, 1.25, -0.355)
+collision_layer = 32
+collision_mask = 0
+monitoring = false
+script = ExtResource("7")
+hurtbox = NodePath("../../Hurtbox")
+
+[node name="Collider" type="CollisionShape3D" parent="Visual/AetherCore"]
+shape = SubResource("CoreShape")
+
+[node name="Crystal" type="MeshInstance3D" parent="Visual/AetherCore"]
+mesh = SubResource("CoreCrystal")
+cast_shadow = 0
+
+[node name="Mount" type="MeshInstance3D" parent="Visual/AetherCore"]
+position = Vector3(0, 0, 0.053)
+rotation_degrees = Vector3(90, 0, 0)
+mesh = SubResource("CoreMount")
+cast_shadow = 0
+
+[node name="Tunic" type="MeshInstance3D" parent="Visual"]
+position = Vector3(0, 0.71, 0)
+rotation_degrees = Vector3(0, 22, 0)
+scale = Vector3(1, 1, 0.76)
+mesh = SubResource("Tunic")
+
+[node name="Head" type="MeshInstance3D" parent="Visual"]
+position = Vector3(0, 1.61, -0.03)
+mesh = SubResource("Helm")
+
+[node name="Eyes" type="MeshInstance3D" parent="Visual/Head"]
+position = Vector3(0, 0.015, -0.194)
+material_override = SubResource("Eyes")
+mesh = SubResource("EyeSlit")
+
+[node name="Crest" type="MeshInstance3D" parent="Visual/Head"]
+position = Vector3(0, 0.17, 0.085)
+rotation_degrees = Vector3(-21, 0, 12)
+scale = Vector3(0.56, 0.61, 0.67)
+mesh = SubResource("Shard")
+
+[node name="LeftLeg" type="Node3D" parent="Visual"]
+position = Vector3(-0.17, 0.55, 0)
+
+[node name="Armor" type="MeshInstance3D" parent="Visual/LeftLeg"]
+position = Vector3(0, -0.25, 0)
+mesh = SubResource("Limb")
+
+[node name="RightLeg" type="Node3D" parent="Visual"]
+position = Vector3(0.17, 0.55, 0)
+
+[node name="Armor" type="MeshInstance3D" parent="Visual/RightLeg"]
+position = Vector3(0, -0.25, 0)
+mesh = SubResource("Limb")
+
+[node name="LeftArm" type="MeshInstance3D" parent="Visual"]
+position = Vector3(-0.39, 1.13, 0)
+rotation_degrees = Vector3(-20, 0, -16)
+mesh = SubResource("Limb")
+
+[node name="WeaponArm" type="Node3D" parent="Visual"]
+position = Vector3(0.38, 1.33, 0)
+rotation_degrees = Vector3(0, 0, 11)
+
+[node name="Armor" type="MeshInstance3D" parent="Visual/WeaponArm"]
+position = Vector3(0, -0.20, 0)
+mesh = SubResource("Limb")
+
+[node name="Blade" type="MeshInstance3D" parent="Visual/WeaponArm"]
+position = Vector3(0.035, -0.46, -0.35)
+rotation_degrees = Vector3(-73, 0, -8)
+mesh = SubResource("Shard")
+
+[node name="Status" type="Label3D" parent="."]
+position = Vector3(0, 2.29, 0)
+pixel_size = 0.0053
+billboard = 1
+font_size = 36
+outline_size = 9
+modulate = Color(0.95, 0.79, 1, 1)
+
+[node name="Vitals" type="MeshInstance3D" parent="."]
+position = Vector3(0, 2.10, 0)
+cast_shadow = 0
+mesh = SubResource("VitalsMesh")
+
+[node name="PostureBreak" type="AudioStreamPlayer3D" parent="."]
+position = Vector3(0, 1.25, 0)
+stream = ExtResource("6")
+volume_db = -7.0
+unit_size = 5.0
+max_distance = 26.0

@@ -1,0 +1,67 @@
+[gd_scene format=3]
+
+[sub_resource type="StandardMaterial3D" id="CoreMat"]
+albedo_color = Color(0.66, 0.22, 0.94, 1)
+roughness = 0.29
+emission_enabled = true
+emission = Color(0.67, 0.20, 1, 1)
+emission_energy_multiplier = 3.0
+
+[sub_resource type="SphereMesh" id="ShardMesh"]
+material = SubResource("CoreMat")
+radius = 0.16
+height = 0.55
+radial_segments = 6
+rings = 3
+
+[sub_resource type="StandardMaterial3D" id="HaloMat"]
+shading_mode = 0
+transparency = 1
+albedo_color = Color(0.74, 0.37, 0.97, 0.62)
+
+[sub_resource type="TorusMesh" id="HaloMesh"]
+material = SubResource("HaloMat")
+inner_radius = 0.30
+outer_radius = 0.325
+rings = 32
+ring_segments = 5
+
+[sub_resource type="SphereMesh" id="SparkMesh"]
+material = SubResource("CoreMat")
+radius = 0.018
+height = 0.036
+radial_segments = 5
+rings = 2
+
+[node name="AetherShards" type="Node3D"]
+
+[node name="Core" type="MeshInstance3D" parent="."]
+position = Vector3(0, 0.45, 0)
+rotation_degrees = Vector3(11, 16, -24)
+mesh = SubResource("ShardMesh")
+cast_shadow = 0
+
+[node name="Halo" type="MeshInstance3D" parent="."]
+position = Vector3(0, 0.12, 0)
+mesh = SubResource("HaloMesh")
+cast_shadow = 0
+
+[node name="Glow" type="OmniLight3D" parent="."]
+position = Vector3(0, 0.32, 0)
+light_color = Color(0.72, 0.33, 1, 1)
+light_energy = 1.7
+omni_range = 2.75
+
+[node name="Fragments" type="CPUParticles3D" parent="."]
+position = Vector3(0, 0.58, 0)
+amount = 13
+lifetime = 1.1
+preprocess = 1.1
+mesh = SubResource("SparkMesh")
+emission_shape = 1
+emission_sphere_radius = 0.17
+direction = Vector3(0, 1, 0)
+spread = 28.0
+initial_velocity_min = 0.12
+initial_velocity_max = 0.42
+gravity = Vector3(0, 0.18, 0)

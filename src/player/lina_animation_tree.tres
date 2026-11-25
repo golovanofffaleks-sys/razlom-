@@ -1,0 +1,278 @@
+[gd_resource type="AnimationNodeStateMachine" format=3]
+
+[sub_resource type="AnimationNodeAnimation" id="Idle"]
+animation = &"Idle"
+
+[sub_resource type="AnimationNodeAnimation" id="Walk"]
+animation = &"Walk"
+
+[sub_resource type="AnimationNodeAnimation" id="Run"]
+animation = &"Run"
+
+[sub_resource type="AnimationNodeAnimation" id="Aim"]
+animation = &"Aim"
+
+[sub_resource type="AnimationNodeAnimation" id="BowShot"]
+animation = &"BowShot"
+
+[sub_resource type="AnimationNodeAnimation" id="Dodge"]
+animation = &"Dodge"
+
+[sub_resource type="AnimationNodeAnimation" id="Sword"]
+animation = &"Sword"
+
+[sub_resource type="AnimationNodeAnimation" id="SwordFollow"]
+animation = &"SwordFollow"
+
+[sub_resource type="AnimationNodeAnimation" id="Block"]
+animation = &"Block"
+
+[sub_resource type="AnimationNodeAnimation" id="Parry"]
+animation = &"Parry"
+
+[sub_resource type="AnimationNodeAnimation" id="Hit"]
+animation = &"Hit"
+
+[sub_resource type="AnimationNodeAnimation" id="Death"]
+animation = &"Death"
+
+[sub_resource type="AnimationNodeAnimation" id="Cast"]
+animation = &"Cast"
+
+[sub_resource type="AnimationNodeAnimation" id="Rest"]
+animation = &"Rest"
+
+[sub_resource type="AnimationNodeAnimation" id="RestLoop"]
+animation = &"RestLoop"
+
+[sub_resource type="AnimationNodeAnimation" id="Rise"]
+animation = &"Rise"
+
+[sub_resource type="AnimationNodeBlendSpace1D" id="Locomotion"]
+blend_point_0/node = SubResource("Idle")
+blend_point_0/pos = 0.0
+blend_point_1/node = SubResource("Walk")
+blend_point_1/pos = 0.36
+blend_point_2/node = SubResource("Run")
+blend_point_2/pos = 1.0
+min_space = 0.0
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="Start"]
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="Action"]
+xfade_time = 0.15
+
+[resource]
+states/Start/position = Vector2(20, 32)
+states/Locomotion/node = SubResource("Locomotion")
+states/Locomotion/position = Vector2(200, 32)
+states/Aim/node = SubResource("Aim")
+states/Aim/position = Vector2(380, 32)
+states/BowShot/node = SubResource("BowShot")
+states/BowShot/position = Vector2(560, 32)
+states/Dodge/node = SubResource("Dodge")
+states/Dodge/position = Vector2(740, 32)
+states/Sword/node = SubResource("Sword")
+states/Sword/position = Vector2(200, 142)
+states/SwordFollow/node = SubResource("SwordFollow")
+states/SwordFollow/position = Vector2(380, 142)
+states/Block/node = SubResource("Block")
+states/Block/position = Vector2(560, 142)
+states/Parry/node = SubResource("Parry")
+states/Parry/position = Vector2(740, 142)
+states/Hit/node = SubResource("Hit")
+states/Hit/position = Vector2(200, 252)
+states/Death/node = SubResource("Death")
+states/Death/position = Vector2(380, 252)
+states/Cast/node = SubResource("Cast")
+states/Cast/position = Vector2(560, 252)
+states/Rest/node = SubResource("Rest")
+states/Rest/position = Vector2(740, 252)
+states/RestLoop/node = SubResource("RestLoop")
+states/RestLoop/position = Vector2(200, 362)
+states/Rise/node = SubResource("Rise")
+states/Rise/position = Vector2(380, 362)
+transitions = ["Start", "Locomotion", SubResource("Start"),
+"Locomotion", "Aim", SubResource("Action"),
+"Locomotion", "BowShot", SubResource("Action"),
+"Locomotion", "Dodge", SubResource("Action"),
+"Locomotion", "Sword", SubResource("Action"),
+"Locomotion", "SwordFollow", SubResource("Action"),
+"Locomotion", "Block", SubResource("Action"),
+"Locomotion", "Parry", SubResource("Action"),
+"Locomotion", "Hit", SubResource("Action"),
+"Locomotion", "Death", SubResource("Action"),
+"Locomotion", "Cast", SubResource("Action"),
+"Locomotion", "Rest", SubResource("Action"),
+"Locomotion", "RestLoop", SubResource("Action"),
+"Locomotion", "Rise", SubResource("Action"),
+"Aim", "Locomotion", SubResource("Action"),
+"Aim", "BowShot", SubResource("Action"),
+"Aim", "Dodge", SubResource("Action"),
+"Aim", "Sword", SubResource("Action"),
+"Aim", "SwordFollow", SubResource("Action"),
+"Aim", "Block", SubResource("Action"),
+"Aim", "Parry", SubResource("Action"),
+"Aim", "Hit", SubResource("Action"),
+"Aim", "Death", SubResource("Action"),
+"Aim", "Cast", SubResource("Action"),
+"Aim", "Rest", SubResource("Action"),
+"Aim", "RestLoop", SubResource("Action"),
+"Aim", "Rise", SubResource("Action"),
+"BowShot", "Locomotion", SubResource("Action"),
+"BowShot", "Aim", SubResource("Action"),
+"BowShot", "Dodge", SubResource("Action"),
+"BowShot", "Sword", SubResource("Action"),
+"BowShot", "SwordFollow", SubResource("Action"),
+"BowShot", "Block", SubResource("Action"),
+"BowShot", "Parry", SubResource("Action"),
+"BowShot", "Hit", SubResource("Action"),
+"BowShot", "Death", SubResource("Action"),
+"BowShot", "Cast", SubResource("Action"),
+"BowShot", "Rest", SubResource("Action"),
+"BowShot", "RestLoop", SubResource("Action"),
+"BowShot", "Rise", SubResource("Action"),
+"Dodge", "Locomotion", SubResource("Action"),
+"Dodge", "Aim", SubResource("Action"),
+"Dodge", "BowShot", SubResource("Action"),
+"Dodge", "Sword", SubResource("Action"),
+"Dodge", "SwordFollow", SubResource("Action"),
+"Dodge", "Block", SubResource("Action"),
+"Dodge", "Parry", SubResource("Action"),
+"Dodge", "Hit", SubResource("Action"),
+"Dodge", "Death", SubResource("Action"),
+"Dodge", "Cast", SubResource("Action"),
+"Dodge", "Rest", SubResource("Action"),
+"Dodge", "RestLoop", SubResource("Action"),
+"Dodge", "Rise", SubResource("Action"),
+"Sword", "Locomotion", SubResource("Action"),
+"Sword", "Aim", SubResource("Action"),
+"Sword", "BowShot", SubResource("Action"),
+"Sword", "Dodge", SubResource("Action"),
+"Sword", "SwordFollow", SubResource("Action"),
+"Sword", "Block", SubResource("Action"),
+"Sword", "Parry", SubResource("Action"),
+"Sword", "Hit", SubResource("Action"),
+"Sword", "Death", SubResource("Action"),
+"Sword", "Cast", SubResource("Action"),
+"Sword", "Rest", SubResource("Action"),
+"Sword", "RestLoop", SubResource("Action"),
+"Sword", "Rise", SubResource("Action"),
+"SwordFollow", "Locomotion", SubResource("Action"),
+"SwordFollow", "Aim", SubResource("Action"),
+"SwordFollow", "BowShot", SubResource("Action"),
+"SwordFollow", "Dodge", SubResource("Action"),
+"SwordFollow", "Sword", SubResource("Action"),
+"SwordFollow", "Block", SubResource("Action"),
+"SwordFollow", "Parry", SubResource("Action"),
+"SwordFollow", "Hit", SubResource("Action"),
+"SwordFollow", "Death", SubResource("Action"),
+"SwordFollow", "Cast", SubResource("Action"),
+"SwordFollow", "Rest", SubResource("Action"),
+"SwordFollow", "RestLoop", SubResource("Action"),
+"SwordFollow", "Rise", SubResource("Action"),
+"Block", "Locomotion", SubResource("Action"),
+"Block", "Aim", SubResource("Action"),
+"Block", "BowShot", SubResource("Action"),
+"Block", "Dodge", SubResource("Action"),
+"Block", "Sword", SubResource("Action"),
+"Block", "SwordFollow", SubResource("Action"),
+"Block", "Parry", SubResource("Action"),
+"Block", "Hit", SubResource("Action"),
+"Block", "Death", SubResource("Action"),
+"Block", "Cast", SubResource("Action"),
+"Block", "Rest", SubResource("Action"),
+"Block", "RestLoop", SubResource("Action"),
+"Block", "Rise", SubResource("Action"),
+"Parry", "Locomotion", SubResource("Action"),
+"Parry", "Aim", SubResource("Action"),
+"Parry", "BowShot", SubResource("Action"),
+"Parry", "Dodge", SubResource("Action"),
+"Parry", "Sword", SubResource("Action"),
+"Parry", "SwordFollow", SubResource("Action"),
+"Parry", "Block", SubResource("Action"),
+"Parry", "Hit", SubResource("Action"),
+"Parry", "Death", SubResource("Action"),
+"Parry", "Cast", SubResource("Action"),
+"Parry", "Rest", SubResource("Action"),
+"Parry", "RestLoop", SubResource("Action"),
+"Parry", "Rise", SubResource("Action"),
+"Hit", "Locomotion", SubResource("Action"),
+"Hit", "Aim", SubResource("Action"),
+"Hit", "BowShot", SubResource("Action"),
+"Hit", "Dodge", SubResource("Action"),
+"Hit", "Sword", SubResource("Action"),
+"Hit", "SwordFollow", SubResource("Action"),
+"Hit", "Block", SubResource("Action"),
+"Hit", "Parry", SubResource("Action"),
+"Hit", "Death", SubResource("Action"),
+"Hit", "Cast", SubResource("Action"),
+"Hit", "Rest", SubResource("Action"),
+"Hit", "RestLoop", SubResource("Action"),
+"Hit", "Rise", SubResource("Action"),
+"Death", "Locomotion", SubResource("Action"),
+"Death", "Aim", SubResource("Action"),
+"Death", "BowShot", SubResource("Action"),
+"Death", "Dodge", SubResource("Action"),
+"Death", "Sword", SubResource("Action"),
+"Death", "SwordFollow", SubResource("Action"),
+"Death", "Block", SubResource("Action"),
+"Death", "Parry", SubResource("Action"),
+"Death", "Hit", SubResource("Action"),
+"Death", "Cast", SubResource("Action"),
+"Death", "Rest", SubResource("Action"),
+"Death", "RestLoop", SubResource("Action"),
+"Death", "Rise", SubResource("Action"),
+"Cast", "Locomotion", SubResource("Action"),
+"Cast", "Aim", SubResource("Action"),
+"Cast", "BowShot", SubResource("Action"),
+"Cast", "Dodge", SubResource("Action"),
+"Cast", "Sword", SubResource("Action"),
+"Cast", "SwordFollow", SubResource("Action"),
+"Cast", "Block", SubResource("Action"),
+"Cast", "Parry", SubResource("Action"),
+"Cast", "Hit", SubResource("Action"),
+"Cast", "Death", SubResource("Action"),
+"Cast", "Rest", SubResource("Action"),
+"Cast", "RestLoop", SubResource("Action"),
+"Cast", "Rise", SubResource("Action"),
+"Rest", "Locomotion", SubResource("Action"),
+"Rest", "Aim", SubResource("Action"),
+"Rest", "BowShot", SubResource("Action"),
+"Rest", "Dodge", SubResource("Action"),
+"Rest", "Sword", SubResource("Action"),
+"Rest", "SwordFollow", SubResource("Action"),
+"Rest", "Block", SubResource("Action"),
+"Rest", "Parry", SubResource("Action"),
+"Rest", "Hit", SubResource("Action"),
+"Rest", "Death", SubResource("Action"),
+"Rest", "Cast", SubResource("Action"),
+"Rest", "RestLoop", SubResource("Action"),
+"Rest", "Rise", SubResource("Action"),
+"RestLoop", "Locomotion", SubResource("Action"),
+"RestLoop", "Aim", SubResource("Action"),
+"RestLoop", "BowShot", SubResource("Action"),
+"RestLoop", "Dodge", SubResource("Action"),
+"RestLoop", "Sword", SubResource("Action"),
+"RestLoop", "SwordFollow", SubResource("Action"),
+"RestLoop", "Block", SubResource("Action"),
+"RestLoop", "Parry", SubResource("Action"),
+"RestLoop", "Hit", SubResource("Action"),
+"RestLoop", "Death", SubResource("Action"),
+"RestLoop", "Cast", SubResource("Action"),
+"RestLoop", "Rest", SubResource("Action"),
+"RestLoop", "Rise", SubResource("Action"),
+"Rise", "Locomotion", SubResource("Action"),
+"Rise", "Aim", SubResource("Action"),
+"Rise", "BowShot", SubResource("Action"),
+"Rise", "Dodge", SubResource("Action"),
+"Rise", "Sword", SubResource("Action"),
+"Rise", "SwordFollow", SubResource("Action"),
+"Rise", "Block", SubResource("Action"),
+"Rise", "Parry", SubResource("Action"),
+"Rise", "Hit", SubResource("Action"),
+"Rise", "Death", SubResource("Action"),
+"Rise", "Cast", SubResource("Action"),
+"Rise", "Rest", SubResource("Action"),
+"Rise", "RestLoop", SubResource("Action")]

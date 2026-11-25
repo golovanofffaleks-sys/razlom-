@@ -1,0 +1,510 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://src/player/lina_weapons.gd" id="1_weapons"]
+
+[sub_resource type="CylinderMesh" id="PreviewPoint"]
+top_radius = 0.0
+bottom_radius = 0.040
+height = 0.14
+radial_segments = 5
+rings = 0
+
+[sub_resource type="CylinderMesh" id="PreviewShaft"]
+top_radius = 0.012
+bottom_radius = 0.012
+height = 0.52
+radial_segments = 6
+rings = 0
+
+[sub_resource type="StandardMaterial3D" id="Gold"]
+albedo_color = Color(0.80, 0.55, 0.20, 1)
+metallic = 0.58
+roughness = 0.33
+
+[sub_resource type="StandardMaterial3D" id="Violet"]
+albedo_color = Color(0.24, 0.071, 0.38, 1)
+metallic = 0.26
+roughness = 0.35
+
+[sub_resource type="StandardMaterial3D" id="Wrap"]
+albedo_color = Color(0.093, 0.036, 0.13, 1)
+metallic = 0.03
+roughness = 0.68
+
+[sub_resource type="StandardMaterial3D" id="Cord"]
+albedo_color = Color(0.89, 0.70, 0.58, 1)
+metallic = 0.0
+roughness = 0.63
+
+[sub_resource type="StandardMaterial3D" id="Steel"]
+albedo_color = Color(0.53, 0.49, 0.65, 1)
+metallic = 0.62
+roughness = 0.34
+
+[sub_resource type="StandardMaterial3D" id="Fuller"]
+albedo_color = Color(0.61, 0.34, 0.97, 1)
+metallic = 0.1
+roughness = 0.24
+
+[sub_resource type="CylinderMesh" id="BowGrip"]
+material = SubResource("Wrap")
+top_radius = 0.041
+bottom_radius = 0.041
+height = 0.196
+radial_segments = 10
+rings = 0
+
+[sub_resource type="CylinderMesh" id="TopLimb1"]
+material = SubResource("Violet")
+top_radius = 0.042
+bottom_radius = 0.041
+height = 0.0976934
+radial_segments = 8
+rings = 0
+
+[sub_resource type="CylinderMesh" id="TopLimb2"]
+material = SubResource("Violet")
+top_radius = 0.038
+bottom_radius = 0.042
+height = 0.146455
+radial_segments = 8
+rings = 0
+
+[sub_resource type="CylinderMesh" id="TopLimb3"]
+material = SubResource("Violet")
+top_radius = 0.03
+bottom_radius = 0.038
+height = 0.131685
+radial_segments = 8
+rings = 0
+
+[sub_resource type="CylinderMesh" id="TopLimb4"]
+material = SubResource("Violet")
+top_radius = 0.021
+bottom_radius = 0.03
+height = 0.12093
+radial_segments = 8
+rings = 0
+
+[sub_resource type="CylinderMesh" id="TopLimb5"]
+material = SubResource("Gold")
+top_radius = 0.015
+bottom_radius = 0.021
+height = 0.112361
+radial_segments = 8
+rings = 0
+
+[sub_resource type="CylinderMesh" id="TopLimb6"]
+material = SubResource("Gold")
+top_radius = 0.008
+bottom_radius = 0.015
+height = 0.0475184
+radial_segments = 8
+rings = 0
+
+[sub_resource type="CylinderMesh" id="TopFiligree1"]
+material = SubResource("Gold")
+top_radius = 0.006
+bottom_radius = 0.007
+height = 0.14654
+radial_segments = 6
+rings = 0
+
+[sub_resource type="CylinderMesh" id="TopFiligree2"]
+material = SubResource("Gold")
+top_radius = 0.006
+bottom_radius = 0.007
+height = 0.13178
+radial_segments = 6
+rings = 0
+
+[sub_resource type="CylinderMesh" id="TopFiligree3"]
+material = SubResource("Gold")
+top_radius = 0.006
+bottom_radius = 0.007
+height = 0.121033
+radial_segments = 6
+rings = 0
+
+[sub_resource type="CylinderMesh" id="TopCollar"]
+material = SubResource("Gold")
+top_radius = 0.046
+bottom_radius = 0.044
+height = 0.0327567
+radial_segments = 8
+rings = 0
+
+[sub_resource type="CylinderMesh" id="TopString"]
+material = SubResource("Cord")
+top_radius = 0.0055
+bottom_radius = 0.0055
+height = 0.653196
+radial_segments = 6
+rings = 0
+
+[sub_resource type="CylinderMesh" id="BottomLimb1"]
+material = SubResource("Violet")
+top_radius = 0.042
+bottom_radius = 0.041
+height = 0.0976934
+radial_segments = 8
+rings = 0
+
+[sub_resource type="CylinderMesh" id="BottomLimb2"]
+material = SubResource("Violet")
+top_radius = 0.038
+bottom_radius = 0.042
+height = 0.146455
+radial_segments = 8
+rings = 0
+
+[sub_resource type="CylinderMesh" id="BottomLimb3"]
+material = SubResource("Violet")
+top_radius = 0.03
+bottom_radius = 0.038
+height = 0.131685
+radial_segments = 8
+rings = 0
+
+[sub_resource type="CylinderMesh" id="BottomLimb4"]
+material = SubResource("Violet")
+top_radius = 0.021
+bottom_radius = 0.03
+height = 0.12093
+radial_segments = 8
+rings = 0
+
+[sub_resource type="CylinderMesh" id="BottomLimb5"]
+material = SubResource("Gold")
+top_radius = 0.015
+bottom_radius = 0.021
+height = 0.112361
+radial_segments = 8
+rings = 0
+
+[sub_resource type="CylinderMesh" id="BottomLimb6"]
+material = SubResource("Gold")
+top_radius = 0.008
+bottom_radius = 0.015
+height = 0.0475184
+radial_segments = 8
+rings = 0
+
+[sub_resource type="CylinderMesh" id="BottomFiligree1"]
+material = SubResource("Gold")
+top_radius = 0.006
+bottom_radius = 0.007
+height = 0.14654
+radial_segments = 6
+rings = 0
+
+[sub_resource type="CylinderMesh" id="BottomFiligree2"]
+material = SubResource("Gold")
+top_radius = 0.006
+bottom_radius = 0.007
+height = 0.13178
+radial_segments = 6
+rings = 0
+
+[sub_resource type="CylinderMesh" id="BottomFiligree3"]
+material = SubResource("Gold")
+top_radius = 0.006
+bottom_radius = 0.007
+height = 0.121033
+radial_segments = 6
+rings = 0
+
+[sub_resource type="CylinderMesh" id="BottomCollar"]
+material = SubResource("Gold")
+top_radius = 0.046
+bottom_radius = 0.044
+height = 0.0327567
+radial_segments = 8
+rings = 0
+
+[sub_resource type="CylinderMesh" id="BottomString"]
+material = SubResource("Cord")
+top_radius = 0.0055
+bottom_radius = 0.0055
+height = 0.653196
+radial_segments = 6
+rings = 0
+
+[sub_resource type="CylinderMesh" id="SwordGrip"]
+material = SubResource("Wrap")
+top_radius = 0.032
+bottom_radius = 0.034
+height = 0.237
+radial_segments = 10
+rings = 0
+
+[sub_resource type="CylinderMesh" id="Pommel"]
+material = SubResource("Gold")
+top_radius = 0.047
+bottom_radius = 0.022
+height = 0.061
+radial_segments = 8
+rings = 0
+
+[sub_resource type="CylinderMesh" id="InnerGuard"]
+material = SubResource("Gold")
+top_radius = 0.025
+bottom_radius = 0.043
+height = 0.148637
+radial_segments = 8
+rings = 0
+
+[sub_resource type="CylinderMesh" id="InnerQuillon"]
+material = SubResource("Gold")
+top_radius = 0.01
+bottom_radius = 0.025
+height = 0.0787528
+radial_segments = 8
+rings = 0
+
+[sub_resource type="CylinderMesh" id="InnerGuardInlay"]
+material = SubResource("Violet")
+top_radius = 0.009
+bottom_radius = 0.011
+height = 0.10028
+radial_segments = 6
+rings = 0
+
+[sub_resource type="CylinderMesh" id="OuterGuard"]
+material = SubResource("Gold")
+top_radius = 0.025
+bottom_radius = 0.043
+height = 0.148637
+radial_segments = 8
+rings = 0
+
+[sub_resource type="CylinderMesh" id="OuterQuillon"]
+material = SubResource("Gold")
+top_radius = 0.01
+bottom_radius = 0.025
+height = 0.0787528
+radial_segments = 8
+rings = 0
+
+[sub_resource type="CylinderMesh" id="OuterGuardInlay"]
+material = SubResource("Violet")
+top_radius = 0.009
+bottom_radius = 0.011
+height = 0.10028
+radial_segments = 6
+rings = 0
+
+[sub_resource type="CylinderMesh" id="Blade"]
+material = SubResource("Steel")
+top_radius = 0.053
+bottom_radius = 0.084
+height = 0.995
+radial_segments = 4
+rings = 0
+
+[sub_resource type="CylinderMesh" id="BladePoint"]
+material = SubResource("Steel")
+top_radius = 0
+bottom_radius = 0.053
+height = 0.221
+radial_segments = 4
+rings = 0
+
+[sub_resource type="CylinderMesh" id="FrontFuller"]
+material = SubResource("Fuller")
+top_radius = 0.008
+bottom_radius = 0.018
+height = 0.940026
+radial_segments = 4
+rings = 0
+
+[sub_resource type="CylinderMesh" id="BackFuller"]
+material = SubResource("Fuller")
+top_radius = 0.008
+bottom_radius = 0.018
+height = 0.940026
+radial_segments = 4
+rings = 0
+
+[node name="Weapons" type="Node3D"]
+script = ExtResource("1_weapons")
+
+[node name="BowHand" type="BoneAttachment3D" parent="."]
+bone_name = "LeftHand"
+use_external_skeleton = true
+external_skeleton = NodePath("../../Model/GeneralSkeleton")
+
+[node name="Bow" type="Node3D" parent="BowHand"]
+visible = false
+position = Vector3(-0.055, 0.018, -0.025)
+rotation_degrees = Vector3(65, -48, 52)
+
+[node name="BowGrip" type="MeshInstance3D" parent="BowHand/Bow"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+mesh = SubResource("BowGrip")
+
+[node name="TopLimb1" type="MeshInstance3D" parent="BowHand/Bow"]
+transform = Transform3D(1, -0, 0, 0, 0.92125, -0.388972, 0, 0.388972, 0.92125, 0, 0.135, -0.019)
+mesh = SubResource("TopLimb1")
+
+[node name="TopLimb2" type="MeshInstance3D" parent="BowHand/Bow"]
+transform = Transform3D(1, -0, 0, 0, 0.955927, -0.293606, 0, 0.293606, 0.955927, 0, 0.25, -0.0595)
+mesh = SubResource("TopLimb2")
+
+[node name="TopLimb3" type="MeshInstance3D" parent="BowHand/Bow"]
+transform = Transform3D(1, 0, 0, 0, 0.987203, 0.159471, 0, -0.159471, 0.987203, 0, 0.385, -0.0705)
+mesh = SubResource("TopLimb3")
+
+[node name="TopLimb4" type="MeshInstance3D" parent="BowHand/Bow"]
+transform = Transform3D(1, 0, 0, 0, 0.826927, 0.56231, 0, -0.56231, 0.826927, 0, 0.5, -0.026)
+mesh = SubResource("TopLimb4")
+
+[node name="TopLimb5" type="MeshInstance3D" parent="BowHand/Bow"]
+transform = Transform3D(1, 0, 0, 0, 0.533993, 0.845489, 0, -0.845489, 0.533993, 0, 0.58, 0.0555)
+mesh = SubResource("TopLimb5")
+
+[node name="TopLimb6" type="MeshInstance3D" parent="BowHand/Bow"]
+transform = Transform3D(1, -0, 0, 0, 0.98909, -0.147311, 0, 0.147311, 0.98909, 0, 0.6335, 0.0995)
+mesh = SubResource("TopLimb6")
+
+[node name="TopFiligree1" type="MeshInstance3D" parent="BowHand/Bow"]
+transform = Transform3D(0.999363, 0.0356915, -0, -0.0341204, 0.95537, -0.293435, -0.0104731, 0.293248, 0.955979, 0.0285, 0.25, -0.0595)
+mesh = SubResource("TopFiligree1")
+
+[node name="TopFiligree2" type="MeshInstance3D" parent="BowHand/Bow"]
+transform = Transform3D(0.999261, 0.0384331, -0, -0.037942, 0.986492, 0.159356, 0.00612456, -0.159239, 0.987221, 0.0235, 0.385, -0.0705)
+mesh = SubResource("TopFiligree2")
+
+[node name="TopFiligree3" type="MeshInstance3D" parent="BowHand/Bow"]
+transform = Transform3D(0.998752, 0.0499376, -0, -0.041311, 0.826221, 0.56183, 0.0280565, -0.561129, 0.827253, 0.0185, 0.5, -0.026)
+mesh = SubResource("TopFiligree3")
+
+[node name="TopCollar" type="MeshInstance3D" parent="BowHand/Bow"]
+transform = Transform3D(1, -0, 0, 0, 0.9769, -0.213697, 0, 0.213697, 0.9769, 0, 0.096, -0.0035)
+mesh = SubResource("TopCollar")
+
+[node name="TopString" type="MeshInstance3D" parent="BowHand/Bow"]
+transform = Transform3D(-1, 0, 0, 0, -0.9997, 0.0244949, 0, 0.0244949, 0.9997, 0, 0.3265, 0.105)
+mesh = SubResource("TopString")
+
+[node name="BottomLimb1" type="MeshInstance3D" parent="BowHand/Bow"]
+transform = Transform3D(-1, -0, 0, 0, -0.92125, -0.388972, 0, -0.388972, 0.92125, 0, -0.135, -0.019)
+mesh = SubResource("BottomLimb1")
+
+[node name="BottomLimb2" type="MeshInstance3D" parent="BowHand/Bow"]
+transform = Transform3D(-1, -0, 0, 0, -0.955927, -0.293606, 0, -0.293606, 0.955927, 0, -0.25, -0.0595)
+mesh = SubResource("BottomLimb2")
+
+[node name="BottomLimb3" type="MeshInstance3D" parent="BowHand/Bow"]
+transform = Transform3D(-1, 0, 0, 0, -0.987203, 0.159471, 0, 0.159471, 0.987203, 0, -0.385, -0.0705)
+mesh = SubResource("BottomLimb3")
+
+[node name="BottomLimb4" type="MeshInstance3D" parent="BowHand/Bow"]
+transform = Transform3D(-1, 0, 0, 0, -0.826927, 0.56231, 0, 0.56231, 0.826927, 0, -0.5, -0.026)
+mesh = SubResource("BottomLimb4")
+
+[node name="BottomLimb5" type="MeshInstance3D" parent="BowHand/Bow"]
+transform = Transform3D(-1, 0, 0, 0, -0.533993, 0.845489, 0, 0.845489, 0.533993, 0, -0.58, 0.0555)
+mesh = SubResource("BottomLimb5")
+
+[node name="BottomLimb6" type="MeshInstance3D" parent="BowHand/Bow"]
+transform = Transform3D(-1, -0, 0, 0, -0.98909, -0.147311, 0, -0.147311, 0.98909, 0, -0.6335, 0.0995)
+mesh = SubResource("BottomLimb6")
+
+[node name="BottomFiligree1" type="MeshInstance3D" parent="BowHand/Bow"]
+transform = Transform3D(-0.999363, 0.0356915, 0, -0.0341204, -0.95537, -0.293435, -0.0104731, -0.293248, 0.955979, 0.0285, -0.25, -0.0595)
+mesh = SubResource("BottomFiligree1")
+
+[node name="BottomFiligree2" type="MeshInstance3D" parent="BowHand/Bow"]
+transform = Transform3D(-0.999261, 0.0384331, 0, -0.037942, -0.986492, 0.159356, 0.00612456, 0.159239, 0.987221, 0.0235, -0.385, -0.0705)
+mesh = SubResource("BottomFiligree2")
+
+[node name="BottomFiligree3" type="MeshInstance3D" parent="BowHand/Bow"]
+transform = Transform3D(-0.998752, 0.0499376, 0, -0.041311, -0.826221, 0.56183, 0.0280565, 0.561129, 0.827253, 0.0185, -0.5, -0.026)
+mesh = SubResource("BottomFiligree3")
+
+[node name="BottomCollar" type="MeshInstance3D" parent="BowHand/Bow"]
+transform = Transform3D(-1, -0, 0, 0, -0.9769, -0.213697, 0, -0.213697, 0.9769, 0, -0.096, -0.0035)
+mesh = SubResource("BottomCollar")
+
+[node name="BottomString" type="MeshInstance3D" parent="BowHand/Bow"]
+transform = Transform3D(1, 0, 0, 0, 0.9997, 0.0244949, 0, -0.0244949, 0.9997, 0, -0.3265, 0.105)
+mesh = SubResource("BottomString")
+
+[node name="Muzzle" type="Marker3D" parent="BowHand/Bow"]
+position = Vector3(0.043, 0.052, -0.135)
+
+[node name="Arrow" type="Node3D" parent="BowHand/Bow/Muzzle"]
+visible = false
+
+[node name="Shaft" type="MeshInstance3D" parent="BowHand/Bow/Muzzle/Arrow"]
+position = Vector3(0, 0, 0.25)
+rotation_degrees = Vector3(90, 0, 0)
+mesh = SubResource("PreviewShaft")
+material_override = SubResource("Wrap")
+cast_shadow = 0
+
+[node name="Point" type="MeshInstance3D" parent="BowHand/Bow/Muzzle/Arrow"]
+position = Vector3(0, 0, -0.055)
+rotation_degrees = Vector3(-90, 0, 0)
+mesh = SubResource("PreviewPoint")
+material_override = SubResource("Gold")
+cast_shadow = 0
+
+[node name="SwordHand" type="BoneAttachment3D" parent="."]
+bone_name = "RightHand"
+use_external_skeleton = true
+external_skeleton = NodePath("../../Model/GeneralSkeleton")
+
+[node name="Sword" type="Node3D" parent="SwordHand"]
+visible = false
+position = Vector3(0.052, 0.016, -0.014)
+rotation_degrees = Vector3(-16, -105, 170)
+
+[node name="SwordGrip" type="MeshInstance3D" parent="SwordHand/Sword"]
+transform = Transform3D(-1, -0, -0, 0, 0, -1, 0, -1, 0, 0, 0, -0.0025)
+mesh = SubResource("SwordGrip")
+
+[node name="Pommel" type="MeshInstance3D" parent="SwordHand/Sword"]
+transform = Transform3D(-1, -0, -0, 0, 0, -1, 0, -1, 0, 0, 0, 0.1315)
+mesh = SubResource("Pommel")
+
+[node name="InnerGuard" type="MeshInstance3D" parent="SwordHand/Sword"]
+transform = Transform3D(0, 1, -0, -0.988986, 0, -0.148011, -0.148011, 0, 0.988986, -0.0735, 0, -0.131)
+mesh = SubResource("InnerGuard")
+
+[node name="InnerQuillon" type="MeshInstance3D" parent="SwordHand/Sword"]
+transform = Transform3D(0.196116, 0.980581, -0, -0.571408, 0.114282, -0.81267, -0.796888, 0.159378, 0.582725, -0.1695, 0.0045, -0.174)
+mesh = SubResource("InnerQuillon")
+
+[node name="InnerGuardInlay" type="MeshInstance3D" parent="SwordHand/Sword"]
+transform = Transform3D(-0.141421, 0.989949, 0, -0.977267, -0.13961, -0.159554, -0.15795, -0.0225643, 0.987189, -0.087, 0.028, -0.131)
+mesh = SubResource("InnerGuardInlay")
+
+[node name="OuterGuard" type="MeshInstance3D" parent="SwordHand/Sword"]
+transform = Transform3D(0, -1, 0, 0.988986, 0, -0.148011, 0.148011, 0, 0.988986, 0.0735, 0, -0.131)
+mesh = SubResource("OuterGuard")
+
+[node name="OuterQuillon" type="MeshInstance3D" parent="SwordHand/Sword"]
+transform = Transform3D(0.196116, -0.980581, 0, 0.571408, 0.114282, -0.81267, 0.796888, 0.159378, 0.582725, 0.1695, 0.0045, -0.174)
+mesh = SubResource("OuterQuillon")
+
+[node name="OuterGuardInlay" type="MeshInstance3D" parent="SwordHand/Sword"]
+transform = Transform3D(-0.141421, -0.989949, 0, 0.977267, -0.13961, -0.159554, 0.15795, -0.0225643, 0.987189, 0.087, 0.028, -0.131)
+mesh = SubResource("OuterGuardInlay")
+
+[node name="Blade" type="MeshInstance3D" parent="SwordHand/Sword"]
+transform = Transform3D(-1, -0, -0, 0, 0, -1, 0, -0.38, 0, 0, 0, -0.6425)
+mesh = SubResource("Blade")
+
+[node name="BladePoint" type="MeshInstance3D" parent="SwordHand/Sword"]
+transform = Transform3D(-1, -0, -0, 0, 0, -1, 0, -0.38, 0, 0, 0, -1.2495)
+mesh = SubResource("BladePoint")
+
+[node name="FrontFuller" type="MeshInstance3D" parent="SwordHand/Sword"]
+transform = Transform3D(-1, -0, 0, 0, -0.0074466, -0.999972, 0, -0.379989, 0.00282971, 0, 0.0225, -0.69)
+mesh = SubResource("FrontFuller")
+
+[node name="BackFuller" type="MeshInstance3D" parent="SwordHand/Sword"]
+transform = Transform3D(-1, -0, -0, 0, 0.0074466, -0.999972, 0, -0.379989, -0.00282971, 0, -0.0225, -0.69)
+mesh = SubResource("BackFuller")

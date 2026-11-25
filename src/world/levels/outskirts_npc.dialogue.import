@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=18
+type="Resource"
+uid="uid://c2myoc51ij8mb"
+path="res://.godot/imported/outskirts_npc.dialogue-ca375c9645316184c45eaca6e0f73967.tres"
+
+[deps]
+
+source_file="res://src/world/levels/outskirts_npc.dialogue"
+dest_files=["res://.godot/imported/outskirts_npc.dialogue-ca375c9645316184c45eaca6e0f73967.tres"]
+
+[params]
+
+defaults=true

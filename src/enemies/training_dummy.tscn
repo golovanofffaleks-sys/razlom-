@@ -1,0 +1,188 @@
+[gd_scene load_steps=19 format=3]
+
+[ext_resource type="Script" path="res://src/enemies/training_dummy.gd" id="1"]
+[ext_resource type="Script" path="res://src/components/health_component.gd" id="2"]
+[ext_resource type="Script" path="res://src/components/hurtbox_component.gd" id="3"]
+
+[sub_resource type="StandardMaterial3D" id="Wood"]
+albedo_color = Color(0.31, 0.18, 0.11, 1)
+roughness = 0.91
+
+[sub_resource type="StandardMaterial3D" id="Cloth"]
+albedo_color = Color(0.41, 0.22, 0.15, 1)
+roughness = 0.9
+
+[sub_resource type="StandardMaterial3D" id="Iron"]
+albedo_color = Color(0.11, 0.16, 0.18, 1)
+metallic = 0.48
+roughness = 0.66
+
+[sub_resource type="StandardMaterial3D" id="Gold"]
+albedo_color = Color(0.84, 0.63, 0.31, 1)
+metallic = 0.22
+roughness = 0.51
+
+[sub_resource type="CylinderMesh" id="Stand"]
+material = SubResource("Iron")
+top_radius = 0.36
+bottom_radius = 0.59
+height = 0.14
+radial_segments = 8
+
+[sub_resource type="BoxMesh" id="Post"]
+material = SubResource("Wood")
+size = Vector3(0.19, 1.25, 0.22)
+
+[sub_resource type="CapsuleMesh" id="Torso"]
+material = SubResource("Cloth")
+radius = 0.35
+height = 1.03
+radial_segments = 9
+rings = 3
+
+[sub_resource type="BoxMesh" id="Crosspiece"]
+material = SubResource("Wood")
+size = Vector3(1.08, 0.16, 0.18)
+
+[sub_resource type="SphereMesh" id="Head"]
+material = SubResource("Iron")
+radius = 0.26
+height = 0.52
+radial_segments = 8
+rings = 4
+
+[sub_resource type="CylinderMesh" id="Crest"]
+material = SubResource("Gold")
+top_radius = 0.21
+bottom_radius = 0.21
+height = 0.045
+radial_segments = 8
+
+[sub_resource type="BoxShape3D" id="BodyShape"]
+size = Vector3(0.82, 1.54, 0.67)
+
+[sub_resource type="StyleBoxFlat" id="BarBackground"]
+bg_color = Color(0.065, 0.08, 0.09, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.80, 0.63, 0.37, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_left = 4
+corner_radius_bottom_right = 4
+
+[sub_resource type="StyleBoxFlat" id="BarFill"]
+bg_color = Color(0.18, 0.54, 0.44, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_left = 3
+corner_radius_bottom_right = 3
+
+[sub_resource type="StandardMaterial3D" id="StrikeMaterial"]
+shading_mode = 0
+albedo_color = Color(1, 0.32, 0.11, 1)
+emission_enabled = true
+emission = Color(0.9, 0.16, 0.035, 1)
+
+[sub_resource type="TorusMesh" id="StrikeRingMesh"]
+material = SubResource("StrikeMaterial")
+inner_radius = 2.30
+outer_radius = 2.35
+rings = 48
+ring_segments = 6
+
+[node name="TrainingDummy" type="StaticBody3D" groups=["lock_on_targets"]]
+collision_layer = 4
+collision_mask = 0
+script = ExtResource("1")
+
+[node name="BodyCollider" type="CollisionShape3D" parent="."]
+position = Vector3(0, 1.32, 0)
+shape = SubResource("BodyShape")
+
+[node name="Health" type="Node" parent="."]
+script = ExtResource("2")
+
+[node name="Hurtbox" type="Area3D" parent="." node_paths=PackedStringArray("health")]
+position = Vector3(0, 1.32, 0)
+collision_layer = 0
+collision_mask = 0
+monitoring = false
+monitorable = false
+script = ExtResource("3")
+health = NodePath("../Health")
+
+[node name="Collider" type="CollisionShape3D" parent="Hurtbox"]
+shape = SubResource("BodyShape")
+
+[node name="StrikeRing" type="MeshInstance3D" parent="."]
+visible = false
+position = Vector3(0, 0.045, 0)
+cast_shadow = 0
+mesh = SubResource("StrikeRingMesh")
+
+[node name="Stand" type="MeshInstance3D" parent="."]
+position = Vector3(0, 0.075, 0)
+mesh = SubResource("Stand")
+
+[node name="Visual" type="Node3D" parent="."]
+
+[node name="Post" type="MeshInstance3D" parent="Visual"]
+position = Vector3(0, 0.71, 0)
+mesh = SubResource("Post")
+
+[node name="Crosspiece" type="MeshInstance3D" parent="Visual"]
+position = Vector3(0, 1.47, 0)
+mesh = SubResource("Crosspiece")
+
+[node name="Torso" type="MeshInstance3D" parent="Visual"]
+position = Vector3(0, 1.29, 0)
+mesh = SubResource("Torso")
+
+[node name="Head" type="MeshInstance3D" parent="Visual"]
+position = Vector3(0, 1.84, 0)
+mesh = SubResource("Head")
+
+[node name="Crest" type="MeshInstance3D" parent="Visual"]
+position = Vector3(0, 1.35, 0.33)
+rotation_degrees = Vector3(90, 0, 0)
+mesh = SubResource("Crest")
+
+[node name="HealthViewport" type="SubViewport" parent="."]
+transparent_bg = true
+disable_3d = true
+size = Vector2i(144, 28)
+
+[node name="Bar" type="ProgressBar" parent="HealthViewport"]
+offset_right = 144.0
+offset_bottom = 28.0
+mouse_filter = 2
+theme_override_styles/background = SubResource("BarBackground")
+theme_override_styles/fill = SubResource("BarFill")
+show_percentage = false
+
+[node name="Value" type="Label" parent="HealthViewport"]
+offset_right = 144.0
+offset_bottom = 28.0
+theme_override_colors/font_outline_color = Color(0.06, 0.08, 0.09, 1)
+theme_override_constants/outline_size = 4
+theme_override_font_sizes/font_size = 21
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HealthDisplay" type="Sprite3D" parent="."]
+position = Vector3(0, 2.29, 0)
+pixel_size = 0.0089
+billboard = 1
+
+[node name="Damage" type="Label3D" parent="."]
+visible = false
+position = Vector3(0, 2.54, 0)
+pixel_size = 0.008
+billboard = 1
+modulate = Color(1, 0.73, 0.36, 1)
+outline_modulate = Color(0.13, 0.07, 0.045, 1)
+font_size = 43
+outline_size = 11

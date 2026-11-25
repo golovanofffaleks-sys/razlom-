@@ -1,0 +1,7 @@
+# Godot 4+ specific ignores
+.godot/
+/android/
+
+# Local skill junction and temporary Windows plugin files.
+/.agents/skills/studioigor
+/addons/**/bin/~*.dll*

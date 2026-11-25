@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="LinaTuning" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/resources/lina_tuning.gd" id="1"]
+
+[resource]
+resource_local_to_scene = true
+script = ExtResource("1")
+run_speed = 5.5
+dash_speed = 14.0
+aim_time_scale = 0.4

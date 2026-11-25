@@ -1,0 +1,400 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://src/world/gyms/rift_gym.gd" id="1"]
+[ext_resource type="PackedScene" path="res://src/player/lina.tscn" id="2"]
+[ext_resource type="PackedScene" path="res://src/ui/rift_gym_hud.tscn" id="3"]
+[ext_resource type="Script" path="res://addons/phantom_camera/scripts/phantom_camera/phantom_camera_3d.gd" id="4"]
+[ext_resource type="Script" path="res://addons/phantom_camera/scripts/phantom_camera_host/phantom_camera_host.gd" id="5"]
+[ext_resource type="PackedScene" path="res://src/player/lina_combat.tscn" id="6"]
+[ext_resource type="Resource" path="res://src/resources/lina_combat_tuning.tres" id="7"]
+[ext_resource type="PackedScene" path="res://src/world/rift_spawner.tscn" id="8"]
+
+[ext_resource type="Environment" path="res://src/resources/realistic_env.tres" id="9_environment"]
+[ext_resource type="Shader" path="res://assets/textures/arena_stone.gdshader" id="10_stone"]
+
+[sub_resource type="ShaderMaterial" id="FloorStone"]
+shader = ExtResource("10_stone")
+shader_parameter/stone_color = Color(0.34, 0.345, 0.37, 1)
+shader_parameter/grout_color = Color(0.15, 0.153, 0.17, 1)
+shader_parameter/block_size = Vector2(1.43, 1.04)
+shader_parameter/relief = 0.021
+
+[sub_resource type="ShaderMaterial" id="WallStone"]
+shader = ExtResource("10_stone")
+shader_parameter/stone_color = Color(0.265, 0.28, 0.30, 1)
+shader_parameter/grout_color = Color(0.12, 0.135, 0.15, 1)
+shader_parameter/block_size = Vector2(1.24, 0.42)
+shader_parameter/relief = 0.032
+
+[sub_resource type="ShaderMaterial" id="CutStone"]
+shader = ExtResource("10_stone")
+shader_parameter/stone_color = Color(0.37, 0.345, 0.32, 1)
+shader_parameter/grout_color = Color(0.17, 0.155, 0.14, 1)
+shader_parameter/block_size = Vector2(0.84, 0.45)
+shader_parameter/relief = 0.026
+
+[sub_resource type="StandardMaterial3D" id="Inlay"]
+albedo_color = Color(0.32, 0.54, 0.47, 1)
+metallic = 0.48
+roughness = 0.62
+emission_enabled = true
+emission = Color(0.25, 0.53, 0.43, 1)
+emission_energy_multiplier = 0.2
+
+[sub_resource type="StandardMaterial3D" id="Bronze"]
+albedo_color = Color(0.57, 0.36, 0.20, 1)
+metallic = 0.82
+roughness = 0.46
+
+[sub_resource type="SphereShape3D" id="CameraShape"]
+radius = 0.18
+
+[sub_resource type="BoxShape3D" id="FloorShape"]
+size = Vector3(24, 0.5, 28)
+
+[sub_resource type="BoxMesh" id="FloorMesh"]
+material = SubResource("FloorStone")
+size = Vector3(24, 0.5, 28)
+
+[sub_resource type="BoxShape3D" id="WallShape"]
+size = Vector3(28, 2.4, 0.7)
+
+[sub_resource type="BoxMesh" id="WallMesh"]
+material = SubResource("WallStone")
+size = Vector3(28, 2.4, 0.7)
+
+[sub_resource type="BoxMesh" id="WallTrim"]
+material = SubResource("Bronze")
+size = Vector3(28, 0.06, 0.73)
+
+[sub_resource type="StandardMaterial3D" id="SlateEarth"]
+albedo_color = Color(0.16, 0.175, 0.188, 1)
+roughness = 0.96
+
+[sub_resource type="BoxMesh" id="OutcropGround"]
+material = SubResource("SlateEarth")
+size = Vector3(150, 2, 150)
+
+[sub_resource type="BoxMesh" id="RuinedPier"]
+material = SubResource("WallStone")
+size = Vector3(2.0, 6.2, 1.4)
+
+[sub_resource type="BoxMesh" id="RuinedWall"]
+material = SubResource("WallStone")
+size = Vector3(7.0, 3.6, 1.1)
+
+[sub_resource type="StandardMaterial3D" id="Ember"]
+albedo_color = Color(0.68, 0.26, 0.07, 1)
+emission_enabled = true
+emission = Color(1, 0.35, 0.08, 1)
+emission_energy_multiplier = 3.0
+
+[sub_resource type="SphereMesh" id="BrazierEmber"]
+material = SubResource("Ember")
+radius = 0.13
+height = 0.16
+radial_segments = 12
+rings = 6
+
+[sub_resource type="CylinderMesh" id="BrazierBowl"]
+material = SubResource("Bronze")
+top_radius = 0.25
+bottom_radius = 0.12
+height = 0.15
+radial_segments = 12
+
+[sub_resource type="BoxMesh" id="SlalomPillar"]
+material = SubResource("CutStone")
+size = Vector3(0.85, 2.7, 0.85)
+
+[sub_resource type="BoxShape3D" id="SlalomPillarShape"]
+size = Vector3(0.85, 2.7, 0.85)
+
+[sub_resource type="BoxMesh" id="PillarCap"]
+material = SubResource("Bronze")
+size = Vector3(1.02, 0.13, 1.02)
+
+[sub_resource type="BoxMesh" id="ArchBeam"]
+material = SubResource("CutStone")
+size = Vector3(9.65, 0.55, 0.82)
+
+[sub_resource type="BoxMesh" id="ArchInset"]
+material = SubResource("Inlay")
+size = Vector3(8.2, 0.09, 0.075)
+
+[sub_resource type="BoxMesh" id="RitualInlay"]
+material = SubResource("Inlay")
+size = Vector3(0.054, 0.016, 2.6)
+
+[node name="RiftGym" type="Node3D"]
+script = ExtResource("1")
+
+[node name="Environment" type="WorldEnvironment" parent="."]
+environment = ExtResource("9_environment")
+
+[node name="Moon" type="DirectionalLight3D" parent="."]
+rotation_degrees = Vector3(-36, -127, 0)
+light_color = Color(0.66, 0.77, 1, 1)
+light_energy = 1.2
+light_volumetric_fog_energy = 0.65
+shadow_enabled = true
+directional_shadow_max_distance = 42.0
+
+[node name="EntranceLight" type="OmniLight3D" parent="."]
+position = Vector3(-2.4, 2.35, 6.8)
+light_color = Color(1, 0.56, 0.31, 1)
+light_energy = 2.4
+light_volumetric_fog_energy = 0.8
+omni_range = 7.5
+omni_attenuation = 1.6
+
+[node name="ArchLight" type="OmniLight3D" parent="."]
+position = Vector3(-4.3, 2.94, -11.1)
+light_color = Color(1, 0.57, 0.31, 1)
+light_energy = 2.25
+light_volumetric_fog_energy = 1.1
+omni_range = 7.0
+omni_attenuation = 1.5
+
+[node name="ArchRightLight" type="OmniLight3D" parent="."]
+position = Vector3(4.3, 2.94, -11.1)
+light_color = Color(1, 0.57, 0.31, 1)
+light_energy = 2.25
+light_volumetric_fog_energy = 1.1
+omni_range = 7.0
+omni_attenuation = 1.5
+
+[node name="Backdrop" type="Node3D" parent="."]
+
+[node name="Ground" type="MeshInstance3D" parent="Backdrop"]
+position = Vector3(0, -1.14, -27)
+mesh = SubResource("OutcropGround")
+gi_mode = 0
+
+[node name="WesternPier" type="MeshInstance3D" parent="Backdrop"]
+position = Vector3(-15, 2.65, -20)
+rotation_degrees = Vector3(0, 13, 3)
+mesh = SubResource("RuinedPier")
+
+[node name="WesternWall" type="MeshInstance3D" parent="Backdrop"]
+position = Vector3(-10.8, 1.6, -21)
+rotation_degrees = Vector3(0, 13, -5)
+mesh = SubResource("RuinedWall")
+
+[node name="WesternStub" type="MeshInstance3D" parent="Backdrop"]
+position = Vector3(-7, 1.9, -22)
+rotation_degrees = Vector3(0, 8, 5)
+scale = Vector3(0.86, 0.64, 1.08)
+mesh = SubResource("RuinedPier")
+
+[node name="EasternPier" type="MeshInstance3D" parent="Backdrop"]
+position = Vector3(10.8, 2.9, -23)
+rotation_degrees = Vector3(0, -18, -3)
+mesh = SubResource("RuinedPier")
+
+[node name="EasternWall" type="MeshInstance3D" parent="Backdrop"]
+position = Vector3(15.1, 1.56, -21.6)
+rotation_degrees = Vector3(0, -18, 4)
+mesh = SubResource("RuinedWall")
+
+[node name="EasternStub" type="MeshInstance3D" parent="Backdrop"]
+position = Vector3(18.9, 2.08, -20.35)
+rotation_degrees = Vector3(0, -21, 2)
+scale = Vector3(0.93, 0.72, 1)
+mesh = SubResource("RuinedPier")
+
+[node name="Spawn" type="Marker3D" parent="."]
+position = Vector3(0, 0.10, 5.5)
+
+[node name="Lina" parent="." instance=ExtResource("2")]
+position = Vector3(0, 0.10, 5.5)
+collision_mask = 5
+
+[node name="PhantomCamera" type="Node3D" parent="." node_paths=PackedStringArray("follow_target")]
+position = Vector3(0.52, 2.72, 10.88)
+script = ExtResource("4")
+priority = 10
+follow_mode = 6
+follow_target = NodePath("../Lina")
+follow_offset = Vector3(0.52, 1.54, 0)
+follow_distance = 5.5
+look_at_offset = Vector3(0, 1.24, 0)
+spring_length = 5.5
+shape = SubResource("CameraShape")
+margin = 0.08
+tween_on_load = false
+
+[node name="Camera" type="Camera3D" parent="."]
+position = Vector3(0.52, 2.72, 10.88)
+rotation_degrees = Vector3(-12, 0, 0)
+current = true
+fov = 70.0
+
+[node name="PhantomCameraHost" type="Node" parent="Camera"]
+process_priority = 300
+process_physics_priority = 300
+script = ExtResource("5")
+
+[node name="Combat" parent="." node_paths=PackedStringArray("player", "camera", "facing") instance=ExtResource("6")]
+tuning = ExtResource("7")
+player = NodePath("../Lina")
+camera = NodePath("../Camera")
+facing = NodePath("../Lina/Visual")
+
+[node name="LockMarker" type="Label3D" parent="."]
+visible = false
+billboard = 1
+no_depth_test = true
+fixed_size = true
+text = "◇"
+font_size = 18
+outline_size = 4
+modulate = Color(1, 0.83, 0.5, 1)
+
+[node name="Arena" type="Node3D" parent="."]
+
+[node name="Floor" type="StaticBody3D" parent="Arena"]
+position = Vector3(0, -0.25, 0)
+collision_mask = 0
+
+[node name="Mesh" type="MeshInstance3D" parent="Arena/Floor"]
+mesh = SubResource("FloorMesh")
+
+[node name="Collider" type="CollisionShape3D" parent="Arena/Floor"]
+shape = SubResource("FloorShape")
+
+[node name="NorthWall" type="StaticBody3D" parent="Arena"]
+position = Vector3(0, 1.2, -13.65)
+collision_mask = 0
+
+[node name="Mesh" type="MeshInstance3D" parent="Arena/NorthWall"]
+mesh = SubResource("WallMesh")
+
+[node name="Trim" type="MeshInstance3D" parent="Arena/NorthWall"]
+position = Vector3(0, 1.2, 0)
+mesh = SubResource("WallTrim")
+
+[node name="Collider" type="CollisionShape3D" parent="Arena/NorthWall"]
+shape = SubResource("WallShape")
+
+[node name="SouthWall" type="StaticBody3D" parent="Arena"]
+position = Vector3(0, 1.2, 13.65)
+collision_mask = 0
+
+[node name="Mesh" type="MeshInstance3D" parent="Arena/SouthWall"]
+mesh = SubResource("WallMesh")
+
+[node name="Trim" type="MeshInstance3D" parent="Arena/SouthWall"]
+position = Vector3(0, 1.2, 0)
+mesh = SubResource("WallTrim")
+
+[node name="Collider" type="CollisionShape3D" parent="Arena/SouthWall"]
+shape = SubResource("WallShape")
+
+[node name="WestWall" type="StaticBody3D" parent="Arena"]
+position = Vector3(-11.65, 1.2, 0)
+rotation_degrees = Vector3(0, 90, 0)
+collision_mask = 0
+
+[node name="Mesh" type="MeshInstance3D" parent="Arena/WestWall"]
+mesh = SubResource("WallMesh")
+
+[node name="Trim" type="MeshInstance3D" parent="Arena/WestWall"]
+position = Vector3(0, 1.2, 0)
+mesh = SubResource("WallTrim")
+
+[node name="Collider" type="CollisionShape3D" parent="Arena/WestWall"]
+shape = SubResource("WallShape")
+
+[node name="EastWall" type="StaticBody3D" parent="Arena"]
+position = Vector3(11.65, 1.2, 0)
+rotation_degrees = Vector3(0, 90, 0)
+collision_mask = 0
+
+[node name="Mesh" type="MeshInstance3D" parent="Arena/EastWall"]
+mesh = SubResource("WallMesh")
+
+[node name="Trim" type="MeshInstance3D" parent="Arena/EastWall"]
+position = Vector3(0, 1.2, 0)
+mesh = SubResource("WallTrim")
+
+[node name="Collider" type="CollisionShape3D" parent="Arena/EastWall"]
+shape = SubResource("WallShape")
+
+[node name="WestArchPier" type="StaticBody3D" parent="Arena"]
+position = Vector3(-4.3, 1.35, -11.5)
+collision_mask = 0
+
+[node name="Mesh" type="MeshInstance3D" parent="Arena/WestArchPier"]
+mesh = SubResource("SlalomPillar")
+
+[node name="Collider" type="CollisionShape3D" parent="Arena/WestArchPier"]
+shape = SubResource("SlalomPillarShape")
+
+[node name="Cap" type="MeshInstance3D" parent="Arena/WestArchPier"]
+position = Vector3(0, 1.38, 0)
+mesh = SubResource("PillarCap")
+
+[node name="EastArchPier" type="StaticBody3D" parent="Arena"]
+position = Vector3(4.3, 1.35, -11.5)
+collision_mask = 0
+
+[node name="Mesh" type="MeshInstance3D" parent="Arena/EastArchPier"]
+mesh = SubResource("SlalomPillar")
+
+[node name="Collider" type="CollisionShape3D" parent="Arena/EastArchPier"]
+shape = SubResource("SlalomPillarShape")
+
+[node name="Cap" type="MeshInstance3D" parent="Arena/EastArchPier"]
+position = Vector3(0, 1.38, 0)
+mesh = SubResource("PillarCap")
+
+[node name="ArchLintel" type="MeshInstance3D" parent="Arena"]
+position = Vector3(0, 3.065, -11.5)
+mesh = SubResource("ArchBeam")
+
+[node name="ArchInlay" type="MeshInstance3D" parent="Arena"]
+position = Vector3(0, 2.97, -11.08)
+mesh = SubResource("ArchInset")
+
+[node name="WestBrazier" type="MeshInstance3D" parent="Arena"]
+position = Vector3(-4.3, 2.66, -10.96)
+mesh = SubResource("BrazierBowl")
+
+[node name="Ember" type="MeshInstance3D" parent="Arena/WestBrazier"]
+position = Vector3(0, 0.11, 0)
+mesh = SubResource("BrazierEmber")
+
+[node name="EastBrazier" type="MeshInstance3D" parent="Arena"]
+position = Vector3(4.3, 2.66, -10.96)
+mesh = SubResource("BrazierBowl")
+
+[node name="Ember" type="MeshInstance3D" parent="Arena/EastBrazier"]
+position = Vector3(0, 0.11, 0)
+mesh = SubResource("BrazierEmber")
+
+[node name="NorthInlay" type="MeshInstance3D" parent="Arena"]
+position = Vector3(0, 0.019, -3.15)
+rotation_degrees = Vector3(0, 0, 0)
+mesh = SubResource("RitualInlay")
+
+[node name="SouthInlay" type="MeshInstance3D" parent="Arena"]
+position = Vector3(0, 0.019, 3.15)
+rotation_degrees = Vector3(0, 0, 0)
+mesh = SubResource("RitualInlay")
+
+[node name="WestInlay" type="MeshInstance3D" parent="Arena"]
+position = Vector3(-3.15, 0.019, 0)
+rotation_degrees = Vector3(0, 90, 0)
+mesh = SubResource("RitualInlay")
+
+[node name="EastInlay" type="MeshInstance3D" parent="Arena"]
+position = Vector3(3.15, 0.019, 0)
+rotation_degrees = Vector3(0, 90, 0)
+mesh = SubResource("RitualInlay")
+
+[node name="RiftSpawner" parent="." node_paths=PackedStringArray("target") instance=ExtResource("8")]
+rift_id = "rift_gym"
+target = NodePath("../Lina")
+
+[node name="LinaGymHud" parent="." instance=ExtResource("3")]

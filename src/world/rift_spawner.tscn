@@ -1,0 +1,150 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://src/world/rift_spawner.gd" id="1"]
+[ext_resource type="Resource" path="res://src/resources/rift_tuning.tres" id="2"]
+[ext_resource type="Shader" path="res://assets/textures/rift_crack.gdshader" id="3"]
+[ext_resource type="AudioStream" path="res://assets/audio/rift_seal.wav" id="4"]
+
+[ext_resource type="AudioStream" path="res://assets/audio/rift_hum.wav" id="8_hum"]
+
+[sub_resource type="ShaderMaterial" id="CrackMaterial"]
+resource_local_to_scene = true
+shader = ExtResource("3")
+shader_parameter/charge = 0.0
+
+[sub_resource type="QuadMesh" id="CrackPlane"]
+size = Vector2(2.8, 4.2)
+
+[sub_resource type="StandardMaterial3D" id="SigilMaterial"]
+resource_local_to_scene = true
+albedo_color = Color(0.15, 0.19, 0.20, 1)
+metallic = 0.7
+roughness = 0.42
+emission_enabled = true
+emission = Color(0.67, 0.24, 0.98, 1)
+emission_energy_multiplier = 1.1
+
+[sub_resource type="TorusMesh" id="SigilRing"]
+inner_radius = 1.47
+outer_radius = 1.51
+rings = 12
+ring_segments = 6
+
+[sub_resource type="StandardMaterial3D" id="FoundationMaterial"]
+albedo_color = Color(0.12, 0.14, 0.17, 1)
+metallic = 0.34
+roughness = 0.70
+
+[sub_resource type="CylinderMesh" id="Foundation"]
+material = SubResource("FoundationMaterial")
+top_radius = 1.58
+bottom_radius = 1.68
+height = 0.08
+radial_segments = 12
+
+[sub_resource type="StandardMaterial3D" id="SparkMaterial"]
+shading_mode = 0
+vertex_color_use_as_albedo = true
+disable_fog = true
+
+[sub_resource type="BoxMesh" id="SparkMesh"]
+material = SubResource("SparkMaterial")
+size = Vector3(0.055, 0.105, 0.044)
+
+[node name="RiftSpawner" type="Node3D"]
+script = ExtResource("1")
+tuning = ExtResource("2")
+
+[node name="Minions" type="Node3D" parent="."]
+
+[node name="Foundation" type="MeshInstance3D" parent="."]
+position = Vector3(0, 0.015, 0)
+mesh = SubResource("Foundation")
+
+[node name="Sigil" type="MeshInstance3D" parent="."]
+position = Vector3(0, 0.061, 0)
+cast_shadow = 0
+mesh = SubResource("SigilRing")
+material_override = SubResource("SigilMaterial")
+
+[node name="Crack" type="Node3D" parent="."]
+position = Vector3(0, 2.18, 0)
+
+[node name="Face" type="MeshInstance3D" parent="Crack"]
+cast_shadow = 0
+material_override = SubResource("CrackMaterial")
+mesh = SubResource("CrackPlane")
+
+[node name="Cross" type="MeshInstance3D" parent="Crack"]
+rotation_degrees = Vector3(0, 82, 0)
+cast_shadow = 0
+material_override = SubResource("CrackMaterial")
+mesh = SubResource("CrackPlane")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+position = Vector3(0, 1.35, 0.35)
+light_color = Color(0.67, 0.24, 0.98, 1)
+light_energy = 2.5
+light_volumetric_fog_energy = 0.45
+omni_range = 7.0
+omni_attenuation = 1.5
+
+[node name="Veins" type="CPUParticles3D" parent="."]
+position = Vector3(0, 1.75, 0)
+amount = 42
+lifetime = 1.85
+preprocess = 1.0
+mesh = SubResource("SparkMesh")
+emission_shape = 3
+emission_box_extents = Vector3(0.38, 1.15, 0.20)
+direction = Vector3(0, 1, 0)
+spread = 60.0
+gravity = Vector3(0, 0.22, 0)
+initial_velocity_min = 0.25
+initial_velocity_max = 1.0
+angular_velocity_min = -190.0
+angular_velocity_max = 190.0
+scale_amount_min = 0.25
+scale_amount_max = 0.70
+color = Color(0.67, 0.24, 0.98, 1)
+
+[node name="Burst" type="CPUParticles3D" parent="."]
+position = Vector3(0, 1.80, 0)
+emitting = false
+amount = 82
+lifetime = 0.64
+one_shot = true
+explosiveness = 0.95
+mesh = SubResource("SparkMesh")
+emission_shape = 3
+emission_box_extents = Vector3(0.25, 0.85, 0.16)
+spread = 180.0
+gravity = Vector3(0, -4, 0)
+initial_velocity_min = 1.2
+initial_velocity_max = 5.2
+scale_amount_min = 0.35
+scale_amount_max = 1.15
+color = Color(0.64, 1, 0.85, 1)
+
+[node name="Hint" type="Label3D" parent="."]
+visible = false
+position = Vector3(0, 2.85, 0)
+billboard = 1
+no_depth_test = true
+pixel_size = 0.0048
+font_size = 38
+outline_size = 10
+modulate = Color(0.71, 1, 0.90, 1)
+text = "[E] Запечатать разлом"
+
+[node name="SealSound" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("4")
+volume_db = -5.0
+max_distance = 18.0
+
+[node name="Hum" type="AudioStreamPlayer3D" parent="."]
+position = Vector3(0, 1.5, 0)
+stream = ExtResource("8_hum")
+volume_db = -11.0
+unit_size = 4.0
+max_distance = 22.0

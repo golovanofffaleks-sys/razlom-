@@ -1,0 +1,1710 @@
+[gd_scene format=3]
+
+[ext_resource type="Environment" path="res://src/resources/realistic_env.tres" id="Environment"]
+
+[ext_resource type="PackedScene" path="res://addons/proton_scatter/demos/assets/models/pine_tree.glb" id="Pine"]
+
+[ext_resource type="PackedScene" path="res://addons/proton_scatter/demos/assets/models/large_rock.glb" id="Rock"]
+
+[ext_resource type="PackedScene" path="res://addons/proton_scatter/demos/assets/models/small_rock.glb" id="Stone"]
+
+[ext_resource type="PackedScene" path="res://addons/proton_scatter/demos/assets/models/dead_branch.glb" id="Branch"]
+
+[ext_resource type="PackedScene" path="res://addons/proton_scatter/demos/assets/models/bush.glb" id="Bush"]
+[ext_resource type="Script" path="res://src/world/levels/outskirts_dressing.gd" id="Dressing"]
+
+[ext_resource type="Material" path="res://assets/textures/pbr/roots/surface.tres" id="PbrForest"]
+[ext_resource type="Material" path="res://assets/textures/pbr/mossy_stone_wall/surface.tres" id="PbrMasonry"]
+[ext_resource type="Material" path="res://assets/textures/pbr/dark_rock_02/surface.tres" id="PbrRock"]
+[ext_resource type="PackedScene" path="res://assets/models/environment/boulder_01/boulder_01.gltf" id="ScanBoulder"]
+[ext_resource type="PackedScene" path="res://assets/models/environment/tree_stump_01/tree_stump_01.gltf" id="ScanStump"]
+[ext_resource type="PackedScene" path="res://assets/models/environment/root_cluster_02/root_cluster_02.gltf" id="ScanRoots"]
+[ext_resource type="PackedScene" path="res://assets/models/environment/rock_moss_set_01/rock_moss_set_01.gltf" id="ScanRockfall"]
+
+[sub_resource type="SphereShape3D" id="BoulderCollider"]
+radius = 1.15
+
+[sub_resource type="FogMaterial" id="HollowMist"]
+density = 0.145
+albedo = Color(0.53, 0.63, 0.72, 1)
+height_falloff = 2.3
+edge_fade = 2.3
+
+[sub_resource type="StandardMaterial3D" id="Needles"]
+albedo_color = Color(0.18, 0.26, 0.20, 1)
+roughness = 0.96
+
+[sub_resource type="StandardMaterial3D" id="Bark"]
+albedo_color = Color(0.22, 0.17, 0.13, 1)
+roughness = 0.91
+
+[sub_resource type="StandardMaterial3D" id="Brush"]
+albedo_color = Color(0.26, 0.25, 0.18, 1)
+roughness = 0.95
+
+[sub_resource type="StandardMaterial3D" id="Wood"]
+albedo_color = Color(0.18, 0.105, 0.063, 1)
+roughness = 0.87
+
+[sub_resource type="StandardMaterial3D" id="Iron"]
+albedo_color = Color(0.14, 0.13, 0.12, 1)
+roughness = 0.87
+
+[sub_resource type="StandardMaterial3D" id="WarmEmber"]
+albedo_color = Color(1.0, 0.52, 0.16, 1)
+roughness = 0.87
+emission_enabled = true
+emission = Color(1.0, 0.52, 0.16, 1)
+emission_energy_multiplier = 2.2
+
+[sub_resource type="StandardMaterial3D" id="Rune"]
+albedo_color = Color(0.95, 0.66, 0.31, 1)
+roughness = 0.87
+emission_enabled = true
+emission = Color(0.95, 0.66, 0.31, 1)
+emission_energy_multiplier = 2.2
+
+[sub_resource type="StandardMaterial3D" id="HunterCloth"]
+albedo_color = Color(0.18, 0.23, 0.2, 1)
+roughness = 0.87
+
+[sub_resource type="StandardMaterial3D" id="HunterHood"]
+albedo_color = Color(0.24, 0.24, 0.19, 1)
+roughness = 0.87
+
+[sub_resource type="StandardMaterial3D" id="HunterSkin"]
+albedo_color = Color(0.48, 0.31, 0.22, 1)
+roughness = 0.87
+
+[sub_resource type="StandardMaterial3D" id="Leather"]
+albedo_color = Color(0.18, 0.12, 0.078, 1)
+roughness = 0.87
+
+[sub_resource type="StandardMaterial3D" id="Bandage"]
+albedo_color = Color(0.62, 0.53, 0.39, 1)
+roughness = 0.87
+
+[sub_resource type="StandardMaterial3D" id="Blood"]
+albedo_color = Color(0.29, 0.071, 0.049, 1)
+roughness = 0.87
+
+[sub_resource type="StandardMaterial3D" id="Ethereal"]
+albedo_color = Color(0.58, 0.25, 0.86, 1)
+roughness = 0.87
+emission_enabled = true
+emission = Color(0.58, 0.25, 0.86, 1)
+emission_energy_multiplier = 2.2
+
+[sub_resource type="BoxMesh" id="Brick"]
+size = Vector3(1, 1, 1)
+material = ExtResource("PbrMasonry")
+
+[sub_resource type="BoxMesh" id="Chip"]
+size = Vector3(1, 1, 1)
+material = ExtResource("PbrRock")
+
+[sub_resource type="BoxMesh" id="Timber"]
+size = Vector3(1, 1, 1)
+material = SubResource("Wood")
+
+[sub_resource type="BoxMesh" id="IronBar"]
+size = Vector3(1, 1, 1)
+material = SubResource("Iron")
+
+[sub_resource type="BoxMesh" id="Wrap"]
+size = Vector3(1, 1, 1)
+material = SubResource("Bandage")
+
+[sub_resource type="BoxMesh" id="Stain"]
+size = Vector3(1, 1, 1)
+material = SubResource("Blood")
+
+[sub_resource type="BoxMesh" id="Crystal"]
+size = Vector3(1, 1, 1)
+material = SubResource("Ethereal")
+
+[sub_resource type="SphereMesh" id="Ball"]
+radius = 0.5
+height = 1.0
+radial_segments = 10
+rings = 5
+material = SubResource("WarmEmber")
+
+[sub_resource type="SphereMesh" id="Hood"]
+radius = 0.5
+height = 1.0
+radial_segments = 10
+rings = 5
+material = SubResource("HunterHood")
+
+[sub_resource type="SphereMesh" id="Face"]
+radius = 0.5
+height = 1.0
+radial_segments = 10
+rings = 5
+material = SubResource("HunterSkin")
+
+[sub_resource type="SphereMesh" id="Cloth"]
+radius = 0.5
+height = 1.0
+radial_segments = 10
+rings = 5
+material = SubResource("HunterCloth")
+
+[sub_resource type="SphereMesh" id="Boot"]
+radius = 0.5
+height = 1.0
+radial_segments = 10
+rings = 5
+material = SubResource("Leather")
+
+[sub_resource type="BoxShape3D" id="UnitCollision"]
+size = Vector3(1.05, 0.98, 1.05)
+
+[sub_resource type="BoxMesh" id="Field"]
+size = Vector3(50, 1, 87)
+material = ExtResource("PbrForest")
+
+[sub_resource type="BoxShape3D" id="FloorCollision"]
+size = Vector3(50, 1, 87)
+
+[sub_resource type="CylinderMesh" id="Plinth"]
+top_radius = 0.62
+bottom_radius = 0.75
+height = 0.28
+radial_segments = 8
+material = ExtResource("PbrRock")
+
+[sub_resource type="CylinderMesh" id="Column"]
+top_radius = 0.43
+bottom_radius = 0.49
+height = 0.64
+radial_segments = 8
+material = ExtResource("PbrMasonry")
+
+[sub_resource type="CylinderMesh" id="Basin"]
+top_radius = 0.66
+bottom_radius = 0.4
+height = 0.19
+radial_segments = 8
+material = SubResource("Iron")
+
+[sub_resource type="CylinderMesh" id="TorchCup"]
+top_radius = 0.26
+bottom_radius = 0.12
+height = 0.16
+radial_segments = 8
+material = SubResource("Iron")
+
+[sub_resource type="TorusMesh" id="Sigil"]
+inner_radius = 0.53
+outer_radius = 0.56
+rings = 32
+ring_segments = 5
+material = SubResource("Rune")
+
+[sub_resource type="Gradient" id="Embers"]
+offsets = PackedFloat32Array(0, 0.28, 0.73, 1)
+colors = PackedColorArray(1, 0.83, 0.37, 1, 1, 0.42, 0.16, 1, 0.82, 0.14, 0.05, 0.65, 0.51, 0.09, 0.04, 0)
+
+[sub_resource type="StandardMaterial3D" id="FlameMat"]
+shading_mode = 0
+vertex_color_use_as_albedo = true
+transparency = 1
+
+[sub_resource type="SphereMesh" id="Flame"]
+radius = 0.095
+height = 0.31
+radial_segments = 6
+rings = 3
+material = SubResource("FlameMat")
+
+[sub_resource type="BoxShape3D" id="WestEdgeShape"]
+size = Vector3(1.2, 3, 75)
+
+[sub_resource type="BoxShape3D" id="EastEdgeShape"]
+size = Vector3(1.2, 3, 75)
+
+[sub_resource type="BoxShape3D" id="CliffEndShape"]
+size = Vector3(36, 3, 1.2)
+
+[sub_resource type="BoxShape3D" id="CampEndShape"]
+size = Vector3(36, 3, 1.2)
+
+[sub_resource type="BoxShape3D" id="WestPierShape"]
+size = Vector3(0.85, 3.1, 0.95)
+
+[sub_resource type="BoxShape3D" id="EastPierShape"]
+size = Vector3(0.85, 3.1, 0.95)
+
+[sub_resource type="BoxShape3D" id="WestWall1Shape"]
+size = Vector3(2.7, 1.5, 0.7)
+
+[sub_resource type="BoxShape3D" id="WestWall2Shape"]
+size = Vector3(2.2, 1.04, 0.7)
+
+[sub_resource type="BoxShape3D" id="WestWall3Shape"]
+size = Vector3(1.5, 0.56, 0.7)
+
+[sub_resource type="BoxShape3D" id="EastWall1Shape"]
+size = Vector3(2.7, 1.5, 0.7)
+
+[sub_resource type="BoxShape3D" id="EastWall2Shape"]
+size = Vector3(2.2, 1.04, 0.7)
+
+[sub_resource type="BoxShape3D" id="EastWall3Shape"]
+size = Vector3(1.5, 0.56, 0.7)
+
+[sub_resource type="BoxShape3D" id="CampWallShape"]
+size = Vector3(0.85, 1.9, 5.2)
+
+[node name="OutskirtsLandscape" type="Node3D"]
+script = ExtResource("Dressing")
+needles = SubResource("Needles")
+bark = SubResource("Bark")
+stone = ExtResource("PbrRock")
+brush = SubResource("Brush")
+
+[node name="Environment" type="WorldEnvironment" parent="."]
+environment = ExtResource("Environment")
+
+[node name="Moon" type="DirectionalLight3D" parent="."]
+rotation_degrees = Vector3(-52, -32, 0)
+light_color = Color(0.57, 0.70, 1, 1)
+light_energy = 1.19
+light_volumetric_fog_energy = 0.76
+shadow_enabled = true
+directional_shadow_max_distance = 70.0
+
+[node name="Floor" type="StaticBody3D" parent="."]
+position = Vector3(0, -0.5, -27.5)
+
+[node name="Mesh" type="MeshInstance3D" parent="Floor"]
+mesh = SubResource("Field")
+
+[node name="Collider" type="CollisionShape3D" parent="Floor"]
+shape = SubResource("FloorCollision")
+
+[node name="WestEdge" type="StaticBody3D" parent="."]
+position = Vector3(-18.5, 1.4, -27)
+
+[node name="Collider" type="CollisionShape3D" parent="WestEdge"]
+shape = SubResource("WestEdgeShape")
+
+[node name="EastEdge" type="StaticBody3D" parent="."]
+position = Vector3(18.5, 1.4, -27)
+
+[node name="Collider" type="CollisionShape3D" parent="EastEdge"]
+shape = SubResource("EastEdgeShape")
+
+[node name="CliffEnd" type="StaticBody3D" parent="."]
+position = Vector3(0, 1.4, -62)
+
+[node name="Collider" type="CollisionShape3D" parent="CliffEnd"]
+shape = SubResource("CliffEndShape")
+
+[node name="CampEnd" type="StaticBody3D" parent="."]
+position = Vector3(0, 1.4, 11)
+
+[node name="Collider" type="CollisionShape3D" parent="CampEnd"]
+shape = SubResource("CampEndShape")
+
+[node name="Ruins" type="Node3D" parent="."]
+
+[node name="WestPier" type="StaticBody3D" parent="Ruins"]
+position = Vector3(-2.7, 1.55, -6.5)
+
+[node name="Masonry" type="MeshInstance3D" parent="Ruins/WestPier"]
+position = Vector3(0, 0, 0)
+scale = Vector3(0.85, 3.1, 0.95)
+rotation_degrees = Vector3(0, 0, 0)
+mesh = SubResource("Brick")
+
+[node name="Collider" type="CollisionShape3D" parent="Ruins/WestPier"]
+shape = SubResource("WestPierShape")
+
+[node name="EastPier" type="StaticBody3D" parent="Ruins"]
+position = Vector3(2.7, 1.55, -6.5)
+
+[node name="Masonry" type="MeshInstance3D" parent="Ruins/EastPier"]
+position = Vector3(0, 0, 0)
+scale = Vector3(0.85, 3.1, 0.95)
+rotation_degrees = Vector3(0, 0, 0)
+mesh = SubResource("Brick")
+
+[node name="Collider" type="CollisionShape3D" parent="Ruins/EastPier"]
+shape = SubResource("EastPierShape")
+
+[node name="BrokenLintel" type="MeshInstance3D" parent="Ruins"]
+position = Vector3(0, 3.17, -6.5)
+scale = Vector3(6.3, 0.43, 1.08)
+rotation_degrees = Vector3(2, 0, -2)
+mesh = SubResource("Brick")
+
+[node name="WestWall1" type="StaticBody3D" parent="Ruins"]
+position = Vector3(-4.6, 0.75, -6.45)
+
+[node name="Masonry" type="MeshInstance3D" parent="Ruins/WestWall1"]
+position = Vector3(0, 0, 0)
+scale = Vector3(2.7, 1.5, 0.7)
+rotation_degrees = Vector3(0, 0, 0)
+mesh = SubResource("Brick")
+
+[node name="Collider" type="CollisionShape3D" parent="Ruins/WestWall1"]
+shape = SubResource("WestWall1Shape")
+
+[node name="WestWall2" type="StaticBody3D" parent="Ruins"]
+position = Vector3(-7.2, 0.52, -6.45)
+
+[node name="Masonry" type="MeshInstance3D" parent="Ruins/WestWall2"]
+position = Vector3(0, 0, 0)
+scale = Vector3(2.2, 1.04, 0.7)
+rotation_degrees = Vector3(0, 0, 0)
+mesh = SubResource("Brick")
+
+[node name="Collider" type="CollisionShape3D" parent="Ruins/WestWall2"]
+shape = SubResource("WestWall2Shape")
+
+[node name="WestWall3" type="StaticBody3D" parent="Ruins"]
+position = Vector3(-9.1, 0.28, -6.45)
+
+[node name="Masonry" type="MeshInstance3D" parent="Ruins/WestWall3"]
+position = Vector3(0, 0, 0)
+scale = Vector3(1.5, 0.56, 0.7)
+rotation_degrees = Vector3(0, 0, 0)
+mesh = SubResource("Brick")
+
+[node name="Collider" type="CollisionShape3D" parent="Ruins/WestWall3"]
+shape = SubResource("WestWall3Shape")
+
+[node name="WestCap" type="MeshInstance3D" parent="Ruins"]
+position = Vector3(-2.7, 2.56, -6.5)
+scale = Vector3(1.12, 0.17, 1.18)
+rotation_degrees = Vector3(0, 0, 0)
+mesh = SubResource("Chip")
+
+[node name="WestTorch" type="Node3D" parent="Ruins"]
+position = Vector3(-2.35, 0.91, -5.9)
+
+[node name="Cup" type="MeshInstance3D" parent="Ruins/WestTorch"]
+position = Vector3(0, 0.53, 0)
+scale = Vector3(1, 1, 1)
+rotation_degrees = Vector3(0, 0, 0)
+mesh = SubResource("TorchCup")
+
+[node name="Flames" type="CPUParticles3D" parent="Ruins/WestTorch"]
+position = Vector3(0, 0.606, 0)
+amount = 45
+lifetime = 0.68
+mesh = SubResource("Flame")
+emission_shape = 1
+emission_sphere_radius = 0.11399999999999999
+direction = Vector3(0, 1, 0)
+spread = 24.0
+gravity = Vector3(0, 2.2, 0)
+initial_velocity_min = 0.072
+initial_velocity_max = 0.45599999999999996
+color_ramp = SubResource("Embers")
+scale_amount_min = 0.26
+scale_amount_max = 0.87
+
+[node name="Firelight" type="OmniLight3D" parent="Ruins/WestTorch"]
+position = Vector3(0, 0.882, 0)
+light_color = Color(1, 0.62, 0.31, 1)
+light_energy = 2.7199999999999998
+omni_range = 5.5
+
+[node name="EastWall1" type="StaticBody3D" parent="Ruins"]
+position = Vector3(4.6, 0.75, -6.45)
+
+[node name="Masonry" type="MeshInstance3D" parent="Ruins/EastWall1"]
+position = Vector3(0, 0, 0)
+scale = Vector3(2.7, 1.5, 0.7)
+rotation_degrees = Vector3(0, 0, 0)
+mesh = SubResource("Brick")
+
+[node name="Collider" type="CollisionShape3D" parent="Ruins/EastWall1"]
+shape = SubResource("EastWall1Shape")
+
+[node name="EastWall2" type="StaticBody3D" parent="Ruins"]
+position = Vector3(7.2, 0.52, -6.45)
+
+[node name="Masonry" type="MeshInstance3D" parent="Ruins/EastWall2"]
+position = Vector3(0, 0, 0)
+scale = Vector3(2.2, 1.04, 0.7)
+rotation_degrees = Vector3(0, 0, 0)
+mesh = SubResource("Brick")
+
+[node name="Collider" type="CollisionShape3D" parent="Ruins/EastWall2"]
+shape = SubResource("EastWall2Shape")
+
+[node name="EastWall3" type="StaticBody3D" parent="Ruins"]
+position = Vector3(9.1, 0.28, -6.45)
+
+[node name="Masonry" type="MeshInstance3D" parent="Ruins/EastWall3"]
+position = Vector3(0, 0, 0)
+scale = Vector3(1.5, 0.56, 0.7)
+rotation_degrees = Vector3(0, 0, 0)
+mesh = SubResource("Brick")
+
+[node name="Collider" type="CollisionShape3D" parent="Ruins/EastWall3"]
+shape = SubResource("EastWall3Shape")
+
+[node name="EastCap" type="MeshInstance3D" parent="Ruins"]
+position = Vector3(2.7, 2.56, -6.5)
+scale = Vector3(1.12, 0.17, 1.18)
+rotation_degrees = Vector3(0, 0, 0)
+mesh = SubResource("Chip")
+
+[node name="EastTorch" type="Node3D" parent="Ruins"]
+position = Vector3(2.35, 0.91, -5.9)
+
+[node name="Cup" type="MeshInstance3D" parent="Ruins/EastTorch"]
+position = Vector3(0, 0.53, 0)
+scale = Vector3(1, 1, 1)
+rotation_degrees = Vector3(0, 0, 0)
+mesh = SubResource("TorchCup")
+
+[node name="Flames" type="CPUParticles3D" parent="Ruins/EastTorch"]
+position = Vector3(0, 0.606, 0)
+amount = 45
+lifetime = 0.68
+mesh = SubResource("Flame")
+emission_shape = 1
+emission_sphere_radius = 0.11399999999999999
+direction = Vector3(0, 1, 0)
+spread = 24.0
+gravity = Vector3(0, 2.2, 0)
+initial_velocity_min = 0.072
+initial_velocity_max = 0.45599999999999996
+color_ramp = SubResource("Embers")
+scale_amount_min = 0.26
+scale_amount_max = 0.87
+
+[node name="Firelight" type="OmniLight3D" parent="Ruins/EastTorch"]
+position = Vector3(0, 0.882, 0)
+light_color = Color(1, 0.62, 0.31, 1)
+light_energy = 2.7199999999999998
+omni_range = 5.5
+
+[node name="Debris0" type="MeshInstance3D" parent="Ruins"]
+position = Vector3(-7.281, 0.1, -4.166)
+scale = Vector3(0.5476, 0.2347, 0.6671)
+rotation_degrees = Vector3(0, 91.13, 0)
+mesh = SubResource("Chip")
+
+[node name="Debris1" type="MeshInstance3D" parent="Ruins"]
+position = Vector3(3.873, 0.1, -6.57)
+scale = Vector3(0.61, 0.1991, 0.5355)
+rotation_degrees = Vector3(0, 155.8, 0)
+mesh = SubResource("Chip")
+
+[node name="Debris2" type="MeshInstance3D" parent="Ruins"]
+position = Vector3(9.658, 0.1, -6.719)
+scale = Vector3(0.6476, 0.2242, 0.4277)
+rotation_degrees = Vector3(0, 174.2, 0)
+mesh = SubResource("Chip")
+
+[node name="Debris3" type="MeshInstance3D" parent="Ruins"]
+position = Vector3(7.33, 0.1, -6.427)
+scale = Vector3(0.3321, 0.2467, 0.549)
+rotation_degrees = Vector3(0, 83.13, 0)
+mesh = SubResource("Chip")
+
+[node name="Debris4" type="MeshInstance3D" parent="Ruins"]
+position = Vector3(7.319, 0.1, -6.398)
+scale = Vector3(0.2847, 0.248, 0.4816)
+rotation_degrees = Vector3(0, 108.3, 0)
+mesh = SubResource("Chip")
+
+[node name="Debris5" type="MeshInstance3D" parent="Ruins"]
+position = Vector3(-5.496, 0.1, -7.517)
+scale = Vector3(0.7014, 0.2165, 0.5268)
+rotation_degrees = Vector3(0, 22.77, 0)
+mesh = SubResource("Chip")
+
+[node name="Debris6" type="MeshInstance3D" parent="Ruins"]
+position = Vector3(9.467, 0.1, -6.212)
+scale = Vector3(0.7286, 0.235, 0.4038)
+rotation_degrees = Vector3(0, 165.6, 0)
+mesh = SubResource("Chip")
+
+[node name="Debris7" type="MeshInstance3D" parent="Ruins"]
+position = Vector3(6.136, 0.1, -4.81)
+scale = Vector3(0.3337, 0.2821, 0.7225)
+rotation_degrees = Vector3(0, 1.338, 0)
+mesh = SubResource("Chip")
+
+[node name="Debris8" type="MeshInstance3D" parent="Ruins"]
+position = Vector3(7.445, 0.1, -4.027)
+scale = Vector3(0.5602, 0.2539, 0.7592)
+rotation_degrees = Vector3(0, 133.5, 0)
+mesh = SubResource("Chip")
+
+[node name="Debris9" type="MeshInstance3D" parent="Ruins"]
+position = Vector3(-5.114, 0.1, -7.824)
+scale = Vector3(0.4706, 0.24, 0.4941)
+rotation_degrees = Vector3(0, 108.2, 0)
+mesh = SubResource("Chip")
+
+[node name="Debris10" type="MeshInstance3D" parent="Ruins"]
+position = Vector3(4.523, 0.1, -4.356)
+scale = Vector3(0.4326, 0.232, 0.7975)
+rotation_degrees = Vector3(0, 110.2, 0)
+mesh = SubResource("Chip")
+
+[node name="Debris11" type="MeshInstance3D" parent="Ruins"]
+position = Vector3(3.594, 0.1, -3.811)
+scale = Vector3(0.3011, 0.1723, 0.3265)
+rotation_degrees = Vector3(0, 172.3, 0)
+mesh = SubResource("Chip")
+
+[node name="Debris12" type="MeshInstance3D" parent="Ruins"]
+position = Vector3(-4.106, 0.1, -4.707)
+scale = Vector3(0.294, 0.2364, 0.7337)
+rotation_degrees = Vector3(0, 60, 0)
+mesh = SubResource("Chip")
+
+[node name="Debris13" type="MeshInstance3D" parent="Ruins"]
+position = Vector3(-7.619, 0.1, -8.57)
+scale = Vector3(0.6616, 0.1664, 0.4515)
+rotation_degrees = Vector3(0, 41.12, 0)
+mesh = SubResource("Chip")
+
+[node name="Debris14" type="MeshInstance3D" parent="Ruins"]
+position = Vector3(-5.397, 0.1, -6.754)
+scale = Vector3(0.43, 0.2304, 0.4569)
+rotation_degrees = Vector3(0, 137.6, 0)
+mesh = SubResource("Chip")
+
+[node name="Debris15" type="MeshInstance3D" parent="Ruins"]
+position = Vector3(-5.158, 0.1, -7.792)
+scale = Vector3(0.6495, 0.2901, 0.4769)
+rotation_degrees = Vector3(0, 74.73, 0)
+mesh = SubResource("Chip")
+
+[node name="Debris16" type="MeshInstance3D" parent="Ruins"]
+position = Vector3(-3.112, 0.1, -5.367)
+scale = Vector3(0.3501, 0.2018, 0.2931)
+rotation_degrees = Vector3(0, 121.3, 0)
+mesh = SubResource("Chip")
+
+[node name="Debris17" type="MeshInstance3D" parent="Ruins"]
+position = Vector3(-8.644, 0.1, -5.613)
+scale = Vector3(0.6438, 0.2328, 0.596)
+rotation_degrees = Vector3(0, 78.09, 0)
+mesh = SubResource("Chip")
+
+[node name="Debris18" type="MeshInstance3D" parent="Ruins"]
+position = Vector3(4.575, 0.1, -7.192)
+scale = Vector3(0.6213, 0.2635, 0.4962)
+rotation_degrees = Vector3(0, 12.91, 0)
+mesh = SubResource("Chip")
+
+[node name="CampWall" type="StaticBody3D" parent="Ruins"]
+position = Vector3(5.8, 0.95, 0.7)
+
+[node name="Masonry" type="MeshInstance3D" parent="Ruins/CampWall"]
+position = Vector3(0, 0, 0)
+scale = Vector3(0.85, 1.9, 5.2)
+rotation_degrees = Vector3(0, 0, 0)
+mesh = SubResource("Brick")
+
+[node name="Collider" type="CollisionShape3D" parent="Ruins/CampWall"]
+shape = SubResource("CampWallShape")
+
+[node name="Seat" type="MeshInstance3D" parent="Ruins"]
+position = Vector3(3.45, 0.19, 1.85)
+scale = Vector3(1.4, 0.35, 0.55)
+rotation_degrees = Vector3(0, 18, 0)
+mesh = SubResource("Timber")
+
+[node name="Altar" type="Node3D" parent="."]
+position = Vector3(-3.35, 0, 2.6)
+
+[node name="AltarBody" type="StaticBody3D" parent="Altar"]
+position = Vector3(0, 0.49, 0)
+
+[node name="Collider" type="CollisionShape3D" parent="Altar/AltarBody"]
+shape = SubResource("UnitCollision")
+
+[node name="Base" type="MeshInstance3D" parent="Altar"]
+position = Vector3(0, 0.15, 0)
+scale = Vector3(1, 1, 1)
+rotation_degrees = Vector3(0, 0, 0)
+mesh = SubResource("Plinth")
+
+[node name="Pillar" type="MeshInstance3D" parent="Altar"]
+position = Vector3(0, 0.59, 0)
+scale = Vector3(1, 1, 1)
+rotation_degrees = Vector3(0, 0, 0)
+mesh = SubResource("Column")
+
+[node name="Bowl" type="MeshInstance3D" parent="Altar"]
+position = Vector3(0, 0.91, 0)
+scale = Vector3(1, 1, 1)
+rotation_degrees = Vector3(0, 0, 0)
+mesh = SubResource("Basin")
+
+[node name="GoldSeal" type="MeshInstance3D" parent="Altar"]
+position = Vector3(0, 0.997, 0)
+scale = Vector3(1, 1, 1)
+rotation_degrees = Vector3(0, 0, 0)
+mesh = SubResource("Sigil")
+
+[node name="Coal" type="MeshInstance3D" parent="Altar"]
+position = Vector3(0, 1, 0)
+scale = Vector3(0.45, 0.13, 0.45)
+rotation_degrees = Vector3(0, 0, 0)
+mesh = SubResource("Ball")
+
+[node name="Flames" type="CPUParticles3D" parent="Altar"]
+position = Vector3(0, 1.01, 0)
+amount = 45
+lifetime = 0.68
+mesh = SubResource("Flame")
+emission_shape = 1
+emission_sphere_radius = 0.19
+direction = Vector3(0, 1, 0)
+spread = 24.0
+gravity = Vector3(0, 2.2, 0)
+initial_velocity_min = 0.12
+initial_velocity_max = 0.76
+color_ramp = SubResource("Embers")
+scale_amount_min = 0.26
+scale_amount_max = 1.45
+
+[node name="Firelight" type="OmniLight3D" parent="Altar"]
+position = Vector3(0, 1.47, 0)
+light_color = Color(1, 0.62, 0.31, 1)
+light_energy = 4.2
+light_volumetric_fog_energy = 1.5
+omni_range = 9.0
+
+[node name="Name" type="Label3D" parent="Altar"]
+position = Vector3(0, 2.1, 0)
+billboard = 1
+font_size = 28
+pixel_size = 0.0068
+outline_size = 8
+modulate = Color(1, 0.82, 0.48, 1)
+text = "АЛТАРЬ ХРАНИТЕЛЕЙ"
+
+[node name="BorderStone0" type="MeshInstance3D" parent="Altar"]
+position = Vector3(0, 0.08, 1.12)
+scale = Vector3(0.31, 0.15, 0.22)
+rotation_degrees = Vector3(0, 0, 0)
+mesh = SubResource("Chip")
+
+[node name="BorderStone1" type="MeshInstance3D" parent="Altar"]
+position = Vector3(0.792, 0.08, 0.792)
+scale = Vector3(0.31, 0.15, 0.22)
+rotation_degrees = Vector3(0, 45, 0)
+mesh = SubResource("Chip")
+
+[node name="BorderStone2" type="MeshInstance3D" parent="Altar"]
+position = Vector3(1.12, 0.08, 6.858e-17)
+scale = Vector3(0.31, 0.15, 0.22)
+rotation_degrees = Vector3(0, 90, 0)
+mesh = SubResource("Chip")
+
+[node name="BorderStone3" type="MeshInstance3D" parent="Altar"]
+position = Vector3(0.792, 0.08, -0.792)
+scale = Vector3(0.31, 0.15, 0.22)
+rotation_degrees = Vector3(0, 135, 0)
+mesh = SubResource("Chip")
+
+[node name="BorderStone4" type="MeshInstance3D" parent="Altar"]
+position = Vector3(1.372e-16, 0.08, -1.12)
+scale = Vector3(0.31, 0.15, 0.22)
+rotation_degrees = Vector3(0, 180, 0)
+mesh = SubResource("Chip")
+
+[node name="BorderStone5" type="MeshInstance3D" parent="Altar"]
+position = Vector3(-0.792, 0.08, -0.792)
+scale = Vector3(0.31, 0.15, 0.22)
+rotation_degrees = Vector3(0, 225, 0)
+mesh = SubResource("Chip")
+
+[node name="BorderStone6" type="MeshInstance3D" parent="Altar"]
+position = Vector3(-1.12, 0.08, -2.057e-16)
+scale = Vector3(0.31, 0.15, 0.22)
+rotation_degrees = Vector3(0, 270, 0)
+mesh = SubResource("Chip")
+
+[node name="BorderStone7" type="MeshInstance3D" parent="Altar"]
+position = Vector3(-0.792, 0.08, 0.792)
+scale = Vector3(0.31, 0.15, 0.22)
+rotation_degrees = Vector3(0, 315, 0)
+mesh = SubResource("Chip")
+
+[node name="Hunter" type="Node3D" parent="."]
+position = Vector3(3.43, 0, 2)
+rotation_degrees = Vector3(0, -24, 0)
+
+[node name="Coat" type="MeshInstance3D" parent="Hunter"]
+position = Vector3(0, 0.77, 0)
+scale = Vector3(0.65, 0.82, 0.43)
+rotation_degrees = Vector3(12, 0, 11)
+mesh = SubResource("Cloth")
+
+[node name="Shoulder" type="MeshInstance3D" parent="Hunter"]
+position = Vector3(-0.16, 0.96, 0)
+scale = Vector3(0.67, 0.28, 0.45)
+rotation_degrees = Vector3(8, 0, 13)
+mesh = SubResource("Cloth")
+
+[node name="Hood" type="MeshInstance3D" parent="Hunter"]
+position = Vector3(0.12, 1.3, 0.06)
+scale = Vector3(0.38, 0.43, 0.43)
+rotation_degrees = Vector3(5, 0, 13)
+mesh = SubResource("Hood")
+
+[node name="Face" type="MeshInstance3D" parent="Hunter"]
+position = Vector3(0.13, 1.28, 0.218)
+scale = Vector3(0.22, 0.27, 0.17)
+rotation_degrees = Vector3(0, 0, 0)
+mesh = SubResource("Face")
+
+[node name="Bandage" type="MeshInstance3D" parent="Hunter"]
+position = Vector3(-0.075, 0.7, 0.211)
+scale = Vector3(0.36, 0.14, 0.075)
+rotation_degrees = Vector3(5, 0, -13)
+mesh = SubResource("Wrap")
+
+[node name="Blood" type="MeshInstance3D" parent="Hunter"]
+position = Vector3(-0.17, 0.68, 0.252)
+scale = Vector3(0.12, 0.075, 0.014)
+rotation_degrees = Vector3(0, 0, -21)
+mesh = SubResource("Stain")
+
+[node name="Arm" type="MeshInstance3D" parent="Hunter"]
+position = Vector3(0.19, 0.82, 0.22)
+scale = Vector3(0.18, 0.5, 0.19)
+rotation_degrees = Vector3(11, 0, -61)
+mesh = SubResource("Boot")
+
+[node name="Hand" type="MeshInstance3D" parent="Hunter"]
+position = Vector3(-0.015, 0.71, 0.27)
+scale = Vector3(0.13, 0.12, 0.11)
+rotation_degrees = Vector3(0, 0, 0)
+mesh = SubResource("Face")
+
+[node name="Leg0" type="MeshInstance3D" parent="Hunter"]
+position = Vector3(-0.17, 0.4, 0.27)
+scale = Vector3(0.22, 0.21, 0.62)
+rotation_degrees = Vector3(20, -4, 0)
+mesh = SubResource("Cloth")
+
+[node name="Boot0" type="MeshInstance3D" parent="Hunter"]
+position = Vector3(-0.2, 0.18, 0.6)
+scale = Vector3(0.23, 0.33, 0.37)
+rotation_degrees = Vector3(22, 0, -8)
+mesh = SubResource("Boot")
+
+[node name="Leg1" type="MeshInstance3D" parent="Hunter"]
+position = Vector3(0.17, 0.4, 0.27)
+scale = Vector3(0.22, 0.21, 0.62)
+rotation_degrees = Vector3(20, 4, 0)
+mesh = SubResource("Cloth")
+
+[node name="Boot1" type="MeshInstance3D" parent="Hunter"]
+position = Vector3(0.2, 0.18, 0.6)
+scale = Vector3(0.23, 0.33, 0.37)
+rotation_degrees = Vector3(22, 0, 8)
+mesh = SubResource("Boot")
+
+[node name="CrossbowStock" type="MeshInstance3D" parent="Hunter"]
+position = Vector3(0.6, 0.29, 0.49)
+scale = Vector3(0.11, 0.13, 0.83)
+rotation_degrees = Vector3(0, -21, 22)
+mesh = SubResource("Timber")
+
+[node name="CrossbowLimb" type="MeshInstance3D" parent="Hunter"]
+position = Vector3(0.45, 0.27, 0.18)
+scale = Vector3(0.51, 0.06, 0.095)
+rotation_degrees = Vector3(0, -20, 0)
+mesh = SubResource("IronBar")
+
+[node name="Name" type="Label3D" parent="Hunter"]
+position = Vector3(0, 1.98, 0)
+billboard = 1
+font_size = 28
+pixel_size = 0.0068
+outline_size = 8
+modulate = Color(0.99, 0.88, 0.70, 1)
+text = "РАНЕНЫЙ ОХОТНИК"
+
+[node name="Woodland" type="Node3D" parent="."]
+
+[node name="Pine0" parent="Woodland" instance=ExtResource("Pine")]
+position = Vector3(-16.3, -0.07, 11.11)
+scale = Vector3(1.769, 1.769, 1.769)
+rotation_degrees = Vector3(0, 298, 0)
+
+[node name="Pine1" parent="Woodland" instance=ExtResource("Pine")]
+position = Vector3(17.6, -0.07, 10.58)
+scale = Vector3(1.104, 1.104, 1.104)
+rotation_degrees = Vector3(0, 13, 0)
+
+[node name="Pine2" parent="Woodland" instance=ExtResource("Pine")]
+position = Vector3(-18.35, -0.07, 6.576)
+scale = Vector3(1.118, 1.118, 1.118)
+rotation_degrees = Vector3(0, 246, 0)
+
+[node name="Pine3" parent="Woodland" instance=ExtResource("Pine")]
+position = Vector3(18.33, -0.07, 5.614)
+scale = Vector3(2.551, 2.551, 2.551)
+rotation_degrees = Vector3(0, 211, 0)
+
+[node name="Pine4" parent="Woodland" instance=ExtResource("Pine")]
+position = Vector3(-15.44, -0.07, 3.66)
+scale = Vector3(2.389, 2.389, 2.389)
+rotation_degrees = Vector3(0, 280, 0)
+
+[node name="Pine5" parent="Woodland" instance=ExtResource("Pine")]
+position = Vector3(15.36, -0.07, 1.424)
+scale = Vector3(1.943, 1.943, 1.943)
+rotation_degrees = Vector3(0, 109, 0)
+
+[node name="Pine6" parent="Woodland" instance=ExtResource("Pine")]
+position = Vector3(-14.03, -0.07, -0.2647)
+scale = Vector3(1.226, 1.226, 1.226)
+rotation_degrees = Vector3(0, 13, 0)
+
+[node name="Pine7" parent="Woodland" instance=ExtResource("Pine")]
+position = Vector3(11.41, -0.07, -1.11)
+scale = Vector3(1.33, 1.33, 1.33)
+rotation_degrees = Vector3(0, 346, 0)
+
+[node name="Pine8" parent="Woodland" instance=ExtResource("Pine")]
+position = Vector3(-18.96, -0.07, -4.987)
+scale = Vector3(2.714, 2.714, 2.714)
+rotation_degrees = Vector3(0, 315, 0)
+
+[node name="Pine9" parent="Woodland" instance=ExtResource("Pine")]
+position = Vector3(17.71, -0.07, -3.956)
+scale = Vector3(1.77, 1.77, 1.77)
+rotation_degrees = Vector3(0, 169, 0)
+
+[node name="Pine10" parent="Woodland" instance=ExtResource("Pine")]
+position = Vector3(-15.08, -0.07, -9.775)
+scale = Vector3(3.035, 3.035, 3.035)
+rotation_degrees = Vector3(0, 195, 0)
+
+[node name="Pine11" parent="Woodland" instance=ExtResource("Pine")]
+position = Vector3(18.3, -0.07, -7.499)
+scale = Vector3(1.232, 1.232, 1.232)
+rotation_degrees = Vector3(0, 236, 0)
+
+[node name="Pine12" parent="Woodland" instance=ExtResource("Pine")]
+position = Vector3(-17.5, -0.07, -13.36)
+scale = Vector3(1.668, 1.668, 1.668)
+rotation_degrees = Vector3(0, 291, 0)
+
+[node name="Pine13" parent="Woodland" instance=ExtResource("Pine")]
+position = Vector3(19.16, -0.07, -11.46)
+scale = Vector3(1.91, 1.91, 1.91)
+rotation_degrees = Vector3(0, 15, 0)
+
+[node name="Pine14" parent="Woodland" instance=ExtResource("Pine")]
+position = Vector3(-18.53, -0.07, -16.01)
+scale = Vector3(1.602, 1.602, 1.602)
+rotation_degrees = Vector3(0, 168, 0)
+
+[node name="Pine15" parent="Woodland" instance=ExtResource("Pine")]
+position = Vector3(16.31, -0.07, -15.88)
+scale = Vector3(2.852, 2.852, 2.852)
+rotation_degrees = Vector3(0, 17, 0)
+
+[node name="Pine16" parent="Woodland" instance=ExtResource("Pine")]
+position = Vector3(-15.49, -0.07, -18.32)
+scale = Vector3(1.92, 1.92, 1.92)
+rotation_degrees = Vector3(0, 87, 0)
+
+[node name="Pine17" parent="Woodland" instance=ExtResource("Pine")]
+position = Vector3(20.13, -0.07, -19.35)
+scale = Vector3(1.211, 1.211, 1.211)
+rotation_degrees = Vector3(0, 167, 0)
+
+[node name="Pine18" parent="Woodland" instance=ExtResource("Pine")]
+position = Vector3(-15.57, -0.07, -22.77)
+scale = Vector3(1.392, 1.392, 1.392)
+rotation_degrees = Vector3(0, 272, 0)
+
+[node name="Pine19" parent="Woodland" instance=ExtResource("Pine")]
+position = Vector3(12.79, -0.07, -21.53)
+scale = Vector3(2.565, 2.565, 2.565)
+rotation_degrees = Vector3(0, 194, 0)
+
+[node name="Pine20" parent="Woodland" instance=ExtResource("Pine")]
+position = Vector3(-16.93, -0.07, -26.32)
+scale = Vector3(2.448, 2.448, 2.448)
+rotation_degrees = Vector3(0, 70, 0)
+
+[node name="Pine21" parent="Woodland" instance=ExtResource("Pine")]
+position = Vector3(15.17, -0.07, -25.84)
+scale = Vector3(2.367, 2.367, 2.367)
+rotation_degrees = Vector3(0, 359, 0)
+
+[node name="Pine22" parent="Woodland" instance=ExtResource("Pine")]
+position = Vector3(-14.82, -0.07, -30.08)
+scale = Vector3(2.156, 2.156, 2.156)
+rotation_degrees = Vector3(0, 337, 0)
+
+[node name="Pine23" parent="Woodland" instance=ExtResource("Pine")]
+position = Vector3(13.87, -0.07, -30.75)
+scale = Vector3(2.59, 2.59, 2.59)
+rotation_degrees = Vector3(0, 33, 0)
+
+[node name="Pine24" parent="Woodland" instance=ExtResource("Pine")]
+position = Vector3(-12.76, -0.07, -35.44)
+scale = Vector3(1.599, 1.599, 1.599)
+rotation_degrees = Vector3(0, 343, 0)
+
+[node name="Pine25" parent="Woodland" instance=ExtResource("Pine")]
+position = Vector3(13.81, -0.07, -32.57)
+scale = Vector3(1.484, 1.484, 1.484)
+rotation_degrees = Vector3(0, 84, 0)
+
+[node name="Pine26" parent="Woodland" instance=ExtResource("Pine")]
+position = Vector3(-17.16, -0.07, -38.14)
+scale = Vector3(1.567, 1.567, 1.567)
+rotation_degrees = Vector3(0, 18, 0)
+
+[node name="Pine27" parent="Woodland" instance=ExtResource("Pine")]
+position = Vector3(11.37, -0.07, -37.74)
+scale = Vector3(2.606, 2.606, 2.606)
+rotation_degrees = Vector3(0, 317, 0)
+
+[node name="Pine28" parent="Woodland" instance=ExtResource("Pine")]
+position = Vector3(-13.39, -0.07, -41.64)
+scale = Vector3(2.467, 2.467, 2.467)
+rotation_degrees = Vector3(0, 209, 0)
+
+[node name="Pine29" parent="Woodland" instance=ExtResource("Pine")]
+position = Vector3(15.73, -0.07, -40.96)
+scale = Vector3(2.852, 2.852, 2.852)
+rotation_degrees = Vector3(0, 227, 0)
+
+[node name="Pine30" parent="Woodland" instance=ExtResource("Pine")]
+position = Vector3(-15.58, -0.07, -44.64)
+scale = Vector3(1.713, 1.713, 1.713)
+rotation_degrees = Vector3(0, 114, 0)
+
+[node name="Pine31" parent="Woodland" instance=ExtResource("Pine")]
+position = Vector3(12.03, -0.07, -44.68)
+scale = Vector3(1.459, 1.459, 1.459)
+rotation_degrees = Vector3(0, 272, 0)
+
+[node name="Pine32" parent="Woodland" instance=ExtResource("Pine")]
+position = Vector3(-11.28, -0.07, -49.58)
+scale = Vector3(1.134, 1.134, 1.134)
+rotation_degrees = Vector3(0, 265, 0)
+
+[node name="Pine33" parent="Woodland" instance=ExtResource("Pine")]
+position = Vector3(18.14, -0.07, -48.64)
+scale = Vector3(1.352, 1.352, 1.352)
+rotation_degrees = Vector3(0, 332, 0)
+
+[node name="Pine34" parent="Woodland" instance=ExtResource("Pine")]
+position = Vector3(-15.45, -0.07, -53.05)
+scale = Vector3(2.846, 2.846, 2.846)
+rotation_degrees = Vector3(0, 46, 0)
+
+[node name="Pine35" parent="Woodland" instance=ExtResource("Pine")]
+position = Vector3(19.48, -0.07, -52.09)
+scale = Vector3(2.155, 2.155, 2.155)
+rotation_degrees = Vector3(0, 209, 0)
+
+[node name="Pine36" parent="Woodland" instance=ExtResource("Pine")]
+position = Vector3(-12.8, -0.07, -57.07)
+scale = Vector3(2.036, 2.036, 2.036)
+rotation_degrees = Vector3(0, 27, 0)
+
+[node name="Pine37" parent="Woodland" instance=ExtResource("Pine")]
+position = Vector3(17.93, -0.07, -55.78)
+scale = Vector3(2.441, 2.441, 2.441)
+rotation_degrees = Vector3(0, 291, 0)
+
+[node name="Pine38" parent="Woodland" instance=ExtResource("Pine")]
+position = Vector3(-17.46, -0.07, -60.13)
+scale = Vector3(2.914, 2.914, 2.914)
+rotation_degrees = Vector3(0, 33, 0)
+
+[node name="Pine39" parent="Woodland" instance=ExtResource("Pine")]
+position = Vector3(12.39, -0.07, -61.02)
+scale = Vector3(2.744, 2.744, 2.744)
+rotation_degrees = Vector3(0, 351, 0)
+
+[node name="Boulder0" parent="Woodland" instance=ExtResource("Rock")]
+position = Vector3(-15.24, -0.4, 7.734)
+scale = Vector3(2.39, 2.39, 2.39)
+rotation_degrees = Vector3(0, 210, 0)
+
+[node name="Boulder1" parent="Woodland" instance=ExtResource("Rock")]
+position = Vector3(16.08, -0.4, 8.917)
+scale = Vector3(3.612, 3.612, 3.612)
+rotation_degrees = Vector3(0, 230, 0)
+
+[node name="Boulder2" parent="Woodland" instance=ExtResource("Rock")]
+position = Vector3(-13.7, -0.4, 5.305)
+scale = Vector3(1.618, 1.618, 1.618)
+rotation_degrees = Vector3(0, 300, 0)
+
+[node name="Boulder3" parent="Woodland" instance=ExtResource("Rock")]
+position = Vector3(16.76, -0.4, 4.288)
+scale = Vector3(3.397, 3.397, 3.397)
+rotation_degrees = Vector3(0, 123, 0)
+
+[node name="Boulder4" parent="Woodland" instance=ExtResource("Rock")]
+position = Vector3(-16.93, -0.4, 0.3818)
+scale = Vector3(2.883, 2.883, 2.883)
+rotation_degrees = Vector3(0, 229, 0)
+
+[node name="Boulder5" parent="Woodland" instance=ExtResource("Rock")]
+position = Vector3(17.91, -0.4, 0.03467)
+scale = Vector3(3.562, 3.562, 3.562)
+rotation_degrees = Vector3(0, 141, 0)
+
+[node name="Boulder6" parent="Woodland" instance=ExtResource("Rock")]
+position = Vector3(-14.85, -0.4, -3.402)
+scale = Vector3(2.724, 2.724, 2.724)
+rotation_degrees = Vector3(0, 312, 0)
+
+[node name="Boulder7" parent="Woodland" instance=ExtResource("Rock")]
+position = Vector3(14.39, -0.4, -3.19)
+scale = Vector3(1.374, 1.374, 1.374)
+rotation_degrees = Vector3(0, 148, 0)
+
+[node name="Boulder8" parent="Woodland" instance=ExtResource("Rock")]
+position = Vector3(-17.4, -0.4, -9.062)
+scale = Vector3(3.597, 3.597, 3.597)
+rotation_degrees = Vector3(0, 7, 0)
+
+[node name="Boulder9" parent="Woodland" instance=ExtResource("Rock")]
+position = Vector3(15.19, -0.4, -7.526)
+scale = Vector3(2.188, 2.188, 2.188)
+rotation_degrees = Vector3(0, 214, 0)
+
+[node name="Boulder10" parent="Woodland" instance=ExtResource("Rock")]
+position = Vector3(-14.52, -0.4, -13.29)
+scale = Vector3(2.943, 2.943, 2.943)
+rotation_degrees = Vector3(0, 179, 0)
+
+[node name="Boulder11" parent="Woodland" instance=ExtResource("Rock")]
+position = Vector3(12.52, -0.4, -11.09)
+scale = Vector3(1.811, 1.811, 1.811)
+rotation_degrees = Vector3(0, 163, 0)
+
+[node name="Boulder12" parent="Woodland" instance=ExtResource("Rock")]
+position = Vector3(-14.62, -0.4, -16.26)
+scale = Vector3(3.06, 3.06, 3.06)
+rotation_degrees = Vector3(0, 112, 0)
+
+[node name="Boulder13" parent="Woodland" instance=ExtResource("Rock")]
+position = Vector3(16.34, -0.4, -15.74)
+scale = Vector3(1.554, 1.554, 1.554)
+rotation_degrees = Vector3(0, 135, 0)
+
+[node name="Boulder14" parent="Woodland" instance=ExtResource("Rock")]
+position = Vector3(-12.57, -0.4, -20.48)
+scale = Vector3(3.415, 3.415, 3.415)
+rotation_degrees = Vector3(0, 228, 0)
+
+[node name="Boulder15" parent="Woodland" instance=ExtResource("Rock")]
+position = Vector3(15.1, -0.4, -20.46)
+scale = Vector3(3.524, 3.524, 3.524)
+rotation_degrees = Vector3(0, 335, 0)
+
+[node name="Boulder16" parent="Woodland" instance=ExtResource("Rock")]
+position = Vector3(-15.79, -0.4, -23.63)
+scale = Vector3(2.557, 2.557, 2.557)
+rotation_degrees = Vector3(0, 234, 0)
+
+[node name="Boulder17" parent="Woodland" instance=ExtResource("Rock")]
+position = Vector3(14.5, -0.4, -23.27)
+scale = Vector3(3.169, 3.169, 3.169)
+rotation_degrees = Vector3(0, 315, 0)
+
+[node name="Boulder18" parent="Woodland" instance=ExtResource("Rock")]
+position = Vector3(-14.99, -0.4, -27.82)
+scale = Vector3(3.101, 3.101, 3.101)
+rotation_degrees = Vector3(0, 196, 0)
+
+[node name="Boulder19" parent="Woodland" instance=ExtResource("Rock")]
+position = Vector3(18.82, -0.4, -27.94)
+scale = Vector3(1.481, 1.481, 1.481)
+rotation_degrees = Vector3(0, 11, 0)
+
+[node name="Boulder20" parent="Woodland" instance=ExtResource("Rock")]
+position = Vector3(-16.03, -0.4, -34.01)
+scale = Vector3(2.241, 2.241, 2.241)
+rotation_degrees = Vector3(0, 94, 0)
+
+[node name="Boulder21" parent="Woodland" instance=ExtResource("Rock")]
+position = Vector3(16.97, -0.4, -31.42)
+scale = Vector3(2.117, 2.117, 2.117)
+rotation_degrees = Vector3(0, 220, 0)
+
+[node name="Boulder22" parent="Woodland" instance=ExtResource("Rock")]
+position = Vector3(-18.9, -0.4, -37.14)
+scale = Vector3(3.965, 3.965, 3.965)
+rotation_degrees = Vector3(0, 130, 0)
+
+[node name="Boulder23" parent="Woodland" instance=ExtResource("Rock")]
+position = Vector3(12.04, -0.4, -36.33)
+scale = Vector3(3.883, 3.883, 3.883)
+rotation_degrees = Vector3(0, 101, 0)
+
+[node name="Boulder24" parent="Woodland" instance=ExtResource("Rock")]
+position = Vector3(-13.74, -0.4, -40.67)
+scale = Vector3(1.414, 1.414, 1.414)
+rotation_degrees = Vector3(0, 151, 0)
+
+[node name="Boulder25" parent="Woodland" instance=ExtResource("Rock")]
+position = Vector3(14.37, -0.4, -40.9)
+scale = Vector3(1.503, 1.503, 1.503)
+rotation_degrees = Vector3(0, 294, 0)
+
+[node name="Boulder26" parent="Woodland" instance=ExtResource("Rock")]
+position = Vector3(-14.27, -0.4, -46.47)
+scale = Vector3(2.585, 2.585, 2.585)
+rotation_degrees = Vector3(0, 238, 0)
+
+[node name="Boulder27" parent="Woodland" instance=ExtResource("Rock")]
+position = Vector3(15.6, -0.4, -44.14)
+scale = Vector3(2.481, 2.481, 2.481)
+rotation_degrees = Vector3(0, 230, 0)
+
+[node name="Boulder28" parent="Woodland" instance=ExtResource("Rock")]
+position = Vector3(-12.19, -0.4, -50.4)
+scale = Vector3(2.366, 2.366, 2.366)
+rotation_degrees = Vector3(0, 193, 0)
+
+[node name="Boulder29" parent="Woodland" instance=ExtResource("Rock")]
+position = Vector3(12.24, -0.4, -48.83)
+scale = Vector3(2.553, 2.553, 2.553)
+rotation_degrees = Vector3(0, 302, 0)
+
+[node name="Boulder30" parent="Woodland" instance=ExtResource("Rock")]
+position = Vector3(-17.6, -0.4, -54.27)
+scale = Vector3(3.177, 3.177, 3.177)
+rotation_degrees = Vector3(0, 93, 0)
+
+[node name="Boulder31" parent="Woodland" instance=ExtResource("Rock")]
+position = Vector3(17.11, -0.4, -52.38)
+scale = Vector3(3.911, 3.911, 3.911)
+rotation_degrees = Vector3(0, 38, 0)
+
+[node name="Boulder32" parent="Woodland" instance=ExtResource("Rock")]
+position = Vector3(-14.34, -0.4, -57.87)
+scale = Vector3(2.541, 2.541, 2.541)
+rotation_degrees = Vector3(0, 206, 0)
+
+[node name="Boulder33" parent="Woodland" instance=ExtResource("Rock")]
+position = Vector3(13.05, -0.4, -59.25)
+scale = Vector3(3.142, 3.142, 3.142)
+rotation_degrees = Vector3(0, 194, 0)
+
+[node name="Boulder34" parent="Woodland" instance=ExtResource("Rock")]
+position = Vector3(-13.92, -0.4, -63)
+scale = Vector3(2.267, 2.267, 2.267)
+rotation_degrees = Vector3(0, 319, 0)
+
+[node name="Boulder35" parent="Woodland" instance=ExtResource("Rock")]
+position = Vector3(12.43, -0.4, -61.8)
+scale = Vector3(1.504, 1.504, 1.504)
+rotation_degrees = Vector3(0, 248, 0)
+
+[node name="Understory0" parent="Woodland" instance=ExtResource("Bush")]
+position = Vector3(-4.978, -0.02, -1.185)
+scale = Vector3(1.297, 1.297, 1.297)
+rotation_degrees = Vector3(0, 190, 0)
+
+[node name="Understory1" parent="Woodland" instance=ExtResource("Branch")]
+position = Vector3(4.692, -0.02, -37.69)
+scale = Vector3(1.046, 1.046, 1.046)
+rotation_degrees = Vector3(0, 32, 0)
+
+[node name="Understory2" parent="Woodland" instance=ExtResource("Stone")]
+position = Vector3(-13.36, -0.02, -55.4)
+scale = Vector3(1.763, 1.763, 1.763)
+rotation_degrees = Vector3(0, 95, 0)
+
+[node name="Understory3" parent="Woodland" instance=ExtResource("Bush")]
+position = Vector3(8.455, -0.02, -51.81)
+scale = Vector3(1.034, 1.034, 1.034)
+rotation_degrees = Vector3(0, 137, 0)
+
+[node name="Understory4" parent="Woodland" instance=ExtResource("Branch")]
+position = Vector3(-6.344, -0.02, -52.74)
+scale = Vector3(1.241, 1.241, 1.241)
+rotation_degrees = Vector3(0, 86, 0)
+
+[node name="Understory5" parent="Woodland" instance=ExtResource("Stone")]
+position = Vector3(15.58, -0.02, -52.95)
+scale = Vector3(1.456, 1.456, 1.456)
+rotation_degrees = Vector3(0, 255, 0)
+
+[node name="Understory6" parent="Woodland" instance=ExtResource("Bush")]
+position = Vector3(-11.53, -0.02, -23.7)
+scale = Vector3(1.383, 1.383, 1.383)
+rotation_degrees = Vector3(0, 350, 0)
+
+[node name="Understory7" parent="Woodland" instance=ExtResource("Branch")]
+position = Vector3(6.251, -0.02, 2.205)
+scale = Vector3(0.8602, 0.8602, 0.8602)
+rotation_degrees = Vector3(0, 237, 0)
+
+[node name="Understory8" parent="Woodland" instance=ExtResource("Stone")]
+position = Vector3(-5.515, -0.02, -43.67)
+scale = Vector3(1.674, 1.674, 1.674)
+rotation_degrees = Vector3(0, 329, 0)
+
+[node name="Understory9" parent="Woodland" instance=ExtResource("Bush")]
+position = Vector3(11.95, -0.02, -46.01)
+scale = Vector3(1.442, 1.442, 1.442)
+rotation_degrees = Vector3(0, 238, 0)
+
+[node name="Understory10" parent="Woodland" instance=ExtResource("Branch")]
+position = Vector3(-12.79, -0.02, -42.97)
+scale = Vector3(1.303, 1.303, 1.303)
+rotation_degrees = Vector3(0, 135, 0)
+
+[node name="Understory11" parent="Woodland" instance=ExtResource("Stone")]
+position = Vector3(8.763, -0.02, -6.899)
+scale = Vector3(1.463, 1.463, 1.463)
+rotation_degrees = Vector3(0, 112, 0)
+
+[node name="Understory13" parent="Woodland" instance=ExtResource("Branch")]
+position = Vector3(11.87, -0.02, -40.56)
+scale = Vector3(1.546, 1.546, 1.546)
+rotation_degrees = Vector3(0, 241, 0)
+
+[node name="Understory14" parent="Woodland" instance=ExtResource("Stone")]
+position = Vector3(-11.22, -0.02, -29.61)
+scale = Vector3(1.577, 1.577, 1.577)
+rotation_degrees = Vector3(0, 21, 0)
+
+[node name="Understory15" parent="Woodland" instance=ExtResource("Bush")]
+position = Vector3(8.426, -0.02, 4.044)
+scale = Vector3(1.684, 1.684, 1.684)
+rotation_degrees = Vector3(0, 54, 0)
+
+[node name="Understory16" parent="Woodland" instance=ExtResource("Branch")]
+position = Vector3(-8.051, -0.02, -1.132)
+scale = Vector3(1.777, 1.777, 1.777)
+rotation_degrees = Vector3(0, 99, 0)
+
+[node name="Understory17" parent="Woodland" instance=ExtResource("Stone")]
+position = Vector3(12.56, -0.02, -48.84)
+scale = Vector3(1.216, 1.216, 1.216)
+rotation_degrees = Vector3(0, 105, 0)
+
+[node name="Understory18" parent="Woodland" instance=ExtResource("Bush")]
+position = Vector3(-6.27, -0.02, -32.31)
+scale = Vector3(1.383, 1.383, 1.383)
+rotation_degrees = Vector3(0, 240, 0)
+
+[node name="Understory19" parent="Woodland" instance=ExtResource("Branch")]
+position = Vector3(13.79, -0.02, -8.601)
+scale = Vector3(1.417, 1.417, 1.417)
+rotation_degrees = Vector3(0, 39, 0)
+
+[node name="Understory20" parent="Woodland" instance=ExtResource("Stone")]
+position = Vector3(-13.77, -0.02, 2.726)
+scale = Vector3(1.288, 1.288, 1.288)
+rotation_degrees = Vector3(0, 334, 0)
+
+[node name="Understory21" parent="Woodland" instance=ExtResource("Bush")]
+position = Vector3(12.51, -0.02, -51.8)
+scale = Vector3(0.8566, 0.8566, 0.8566)
+rotation_degrees = Vector3(0, 27, 0)
+
+[node name="Understory22" parent="Woodland" instance=ExtResource("Branch")]
+position = Vector3(-14.61, -0.02, -40.61)
+scale = Vector3(1.227, 1.227, 1.227)
+rotation_degrees = Vector3(0, 167, 0)
+
+[node name="Understory24" parent="Woodland" instance=ExtResource("Bush")]
+position = Vector3(-13.09, -0.02, -20.07)
+scale = Vector3(1.332, 1.332, 1.332)
+rotation_degrees = Vector3(0, 111, 0)
+
+[node name="Understory26" parent="Woodland" instance=ExtResource("Stone")]
+position = Vector3(-10.76, -0.02, -47.04)
+scale = Vector3(1.74, 1.74, 1.74)
+rotation_degrees = Vector3(0, 281, 0)
+
+[node name="Understory27" parent="Woodland" instance=ExtResource("Bush")]
+position = Vector3(4.586, -0.02, -52.98)
+scale = Vector3(0.9126, 0.9126, 0.9126)
+rotation_degrees = Vector3(0, 48, 0)
+
+[node name="Understory28" parent="Woodland" instance=ExtResource("Branch")]
+position = Vector3(-12.22, -0.02, -7.868)
+scale = Vector3(1.51, 1.51, 1.51)
+rotation_degrees = Vector3(0, 263, 0)
+
+[node name="Understory30" parent="Woodland" instance=ExtResource("Bush")]
+position = Vector3(-11.47, -0.02, -9.514)
+scale = Vector3(1.274, 1.274, 1.274)
+rotation_degrees = Vector3(0, 193, 0)
+
+[node name="Understory31" parent="Woodland" instance=ExtResource("Branch")]
+position = Vector3(15.82, -0.02, -31.25)
+scale = Vector3(1.718, 1.718, 1.718)
+rotation_degrees = Vector3(0, 204, 0)
+
+[node name="Understory32" parent="Woodland" instance=ExtResource("Stone")]
+position = Vector3(-13.81, -0.02, -13.44)
+scale = Vector3(1.225, 1.225, 1.225)
+rotation_degrees = Vector3(0, 113, 0)
+
+[node name="Understory33" parent="Woodland" instance=ExtResource("Bush")]
+position = Vector3(8.559, -0.02, -35.82)
+scale = Vector3(0.8866, 0.8866, 0.8866)
+rotation_degrees = Vector3(0, 151, 0)
+
+[node name="Understory34" parent="Woodland" instance=ExtResource("Branch")]
+position = Vector3(-7.266, -0.02, 1.269)
+scale = Vector3(1.696, 1.696, 1.696)
+rotation_degrees = Vector3(0, 54, 0)
+
+[node name="Understory35" parent="Woodland" instance=ExtResource("Stone")]
+position = Vector3(5.321, -0.02, -20.15)
+scale = Vector3(1.477, 1.477, 1.477)
+rotation_degrees = Vector3(0, 61, 0)
+
+[node name="Understory36" parent="Woodland" instance=ExtResource("Bush")]
+position = Vector3(-13.39, -0.02, -36.72)
+scale = Vector3(1.094, 1.094, 1.094)
+rotation_degrees = Vector3(0, 310, 0)
+
+[node name="Understory37" parent="Woodland" instance=ExtResource("Branch")]
+position = Vector3(8.964, -0.02, -20.3)
+scale = Vector3(1.783, 1.783, 1.783)
+rotation_degrees = Vector3(0, 35, 0)
+
+[node name="Understory38" parent="Woodland" instance=ExtResource("Stone")]
+position = Vector3(-8.714, -0.02, -3.798)
+scale = Vector3(1.326, 1.326, 1.326)
+rotation_degrees = Vector3(0, 295, 0)
+
+[node name="Understory39" parent="Woodland" instance=ExtResource("Bush")]
+position = Vector3(12.07, -0.02, -0.9364)
+scale = Vector3(1.327, 1.327, 1.327)
+rotation_degrees = Vector3(0, 98, 0)
+
+[node name="Understory40" parent="Woodland" instance=ExtResource("Branch")]
+position = Vector3(-11.01, -0.02, -21.77)
+scale = Vector3(1.124, 1.124, 1.124)
+rotation_degrees = Vector3(0, 163, 0)
+
+[node name="Understory41" parent="Woodland" instance=ExtResource("Stone")]
+position = Vector3(8.669, -0.02, 3.372)
+scale = Vector3(1.203, 1.203, 1.203)
+rotation_degrees = Vector3(0, 56, 0)
+
+[node name="Understory42" parent="Woodland" instance=ExtResource("Bush")]
+position = Vector3(-10.94, -0.02, -29.19)
+scale = Vector3(0.9037, 0.9037, 0.9037)
+rotation_degrees = Vector3(0, 92, 0)
+
+[node name="Understory43" parent="Woodland" instance=ExtResource("Branch")]
+position = Vector3(8.672, -0.02, -11.94)
+scale = Vector3(1.636, 1.636, 1.636)
+rotation_degrees = Vector3(0, 98, 0)
+
+[node name="Understory44" parent="Woodland" instance=ExtResource("Stone")]
+position = Vector3(-14.23, -0.02, -5.519)
+scale = Vector3(0.8822, 0.8822, 0.8822)
+rotation_degrees = Vector3(0, 43, 0)
+
+[node name="Understory45" parent="Woodland" instance=ExtResource("Bush")]
+position = Vector3(9.896, -0.02, -51.18)
+scale = Vector3(1.565, 1.565, 1.565)
+rotation_degrees = Vector3(0, 246, 0)
+
+[node name="Cliff0" parent="Woodland" instance=ExtResource("Rock")]
+position = Vector3(-23, 0.2, -62.1)
+scale = Vector3(5.242, 5.242, 5.242)
+rotation_degrees = Vector3(0, 5, 0)
+
+[node name="Cliff1" parent="Woodland" instance=ExtResource("Rock")]
+position = Vector3(-19.2, 0.2, -62.2)
+scale = Vector3(7.047, 7.047, 7.047)
+rotation_degrees = Vector3(0, 235, 0)
+
+[node name="Cliff2" parent="Woodland" instance=ExtResource("Rock")]
+position = Vector3(-15.4, 0.2, -61.88)
+scale = Vector3(6.244, 6.244, 6.244)
+rotation_degrees = Vector3(0, 220, 0)
+
+[node name="Cliff3" parent="Woodland" instance=ExtResource("Rock")]
+position = Vector3(-11.6, 0.2, -62.68)
+scale = Vector3(4.742, 4.742, 4.742)
+rotation_degrees = Vector3(0, 172, 0)
+
+[node name="Cliff4" parent="Woodland" instance=ExtResource("Rock")]
+position = Vector3(-7.8, 0.2, -61.8)
+scale = Vector3(5.299, 5.299, 5.299)
+rotation_degrees = Vector3(0, 26, 0)
+
+[node name="Cliff5" parent="Woodland" instance=ExtResource("Rock")]
+position = Vector3(-4, 0.2, -60.78)
+scale = Vector3(5.31, 5.31, 5.31)
+rotation_degrees = Vector3(0, 188, 0)
+
+[node name="Cliff6" parent="Woodland" instance=ExtResource("Rock")]
+position = Vector3(-0.2, 0.2, -62.49)
+scale = Vector3(6.547, 6.547, 6.547)
+rotation_degrees = Vector3(0, 120, 0)
+
+[node name="Cliff7" parent="Woodland" instance=ExtResource("Rock")]
+position = Vector3(3.6, 0.2, -62.18)
+scale = Vector3(5.072, 5.072, 5.072)
+rotation_degrees = Vector3(0, 142, 0)
+
+[node name="Cliff8" parent="Woodland" instance=ExtResource("Rock")]
+position = Vector3(7.4, 0.2, -61.79)
+scale = Vector3(6.137, 6.137, 6.137)
+rotation_degrees = Vector3(0, 93, 0)
+
+[node name="Cliff9" parent="Woodland" instance=ExtResource("Rock")]
+position = Vector3(11.2, 0.2, -61.09)
+scale = Vector3(5.647, 5.647, 5.647)
+rotation_degrees = Vector3(0, 10, 0)
+
+[node name="Cliff10" parent="Woodland" instance=ExtResource("Rock")]
+position = Vector3(15, 0.2, -61.75)
+scale = Vector3(4.492, 4.492, 4.492)
+rotation_degrees = Vector3(0, 108, 0)
+
+[node name="Cliff11" parent="Woodland" instance=ExtResource("Rock")]
+position = Vector3(18.8, 0.2, -61.11)
+scale = Vector3(6.549, 6.549, 6.549)
+rotation_degrees = Vector3(0, 283, 0)
+
+[node name="Cliff12" parent="Woodland" instance=ExtResource("Rock")]
+position = Vector3(22.6, 0.2, -61.51)
+scale = Vector3(5.159, 5.159, 5.159)
+rotation_degrees = Vector3(0, 327, 0)
+
+[node name="Hollow" type="Node3D" parent="."]
+
+[node name="Outcrop0" parent="Hollow" instance=ExtResource("Rock")]
+position = Vector3(-11.5, -0.23, -21.5)
+scale = Vector3(1.737, 1.737, 1.737)
+rotation_degrees = Vector3(0, 289, 0)
+
+[node name="Crystal0" type="MeshInstance3D" parent="Hollow"]
+position = Vector3(-10.13, 0.3245, -21.16)
+scale = Vector3(0.14, 0.8112, 0.18)
+rotation_degrees = Vector3(23, 332, 32)
+mesh = SubResource("Crystal")
+
+[node name="Outcrop1" parent="Hollow" instance=ExtResource("Rock")]
+position = Vector3(-3.3, -0.23, -28.4)
+scale = Vector3(1.725, 1.725, 1.725)
+rotation_degrees = Vector3(0, 124, 0)
+
+[node name="Crystal1" type="MeshInstance3D" parent="Hollow"]
+position = Vector3(-2.93, 0.3622, -27.46)
+scale = Vector3(0.14, 0.9056, 0.18)
+rotation_degrees = Vector3(17, 350, 32)
+mesh = SubResource("Crystal")
+
+[node name="Outcrop2" parent="Hollow" instance=ExtResource("Rock")]
+position = Vector3(-11.7, -0.23, -25.0)
+scale = Vector3(2.295, 2.295, 2.295)
+rotation_degrees = Vector3(0, 69, 0)
+
+[node name="Crystal2" type="MeshInstance3D" parent="Hollow"]
+position = Vector3(-10.33, 0.3374, -24.96)
+scale = Vector3(0.14, 0.8435, 0.18)
+rotation_degrees = Vector3(-15, 269, 32)
+mesh = SubResource("Crystal")
+
+[node name="Outcrop3" parent="Hollow" instance=ExtResource("Rock")]
+position = Vector3(11.1, -0.23, -49.9)
+scale = Vector3(2.687, 2.687, 2.687)
+rotation_degrees = Vector3(0, 199, 0)
+
+[node name="Crystal3" type="MeshInstance3D" parent="Hollow"]
+position = Vector3(10.27, 0.2434, -48.56)
+scale = Vector3(0.14, 0.6086, 0.18)
+rotation_degrees = Vector3(-23, 77, 32)
+mesh = SubResource("Crystal")
+
+[node name="Outcrop4" parent="Hollow" instance=ExtResource("Rock")]
+position = Vector3(-0.9, -0.23, -43.7)
+scale = Vector3(2.539, 2.539, 2.539)
+rotation_degrees = Vector3(0, 1, 0)
+
+[node name="Crystal4" type="MeshInstance3D" parent="Hollow"]
+position = Vector3(0.67, 0.1655, -43.36)
+scale = Vector3(0.14, 0.4136, 0.18)
+rotation_degrees = Vector3(3, 188, 32)
+mesh = SubResource("Crystal")
+
+[node name="Outcrop5" parent="Hollow" instance=ExtResource("Rock")]
+position = Vector3(7.2, -0.23, -51.6)
+scale = Vector3(1.977, 1.977, 1.977)
+rotation_degrees = Vector3(0, 309, 0)
+
+[node name="Crystal5" type="MeshInstance3D" parent="Hollow"]
+position = Vector3(7.57, 0.2847, -50.26)
+scale = Vector3(0.14, 0.7119, 0.18)
+rotation_degrees = Vector3(11, 190, 32)
+mesh = SubResource("Crystal")
+
+[node name="Outcrop6" parent="Hollow" instance=ExtResource("Rock")]
+position = Vector3(14.0, -0.23, -41.5)
+scale = Vector3(2.345, 2.345, 2.345)
+rotation_degrees = Vector3(0, 273, 0)
+
+[node name="Crystal6" type="MeshInstance3D" parent="Hollow"]
+position = Vector3(12.97, 0.4292, -41.16)
+scale = Vector3(0.14, 1.073, 0.18)
+rotation_degrees = Vector3(13, 272, 32)
+mesh = SubResource("Crystal")
+
+[node name="TrailStone0" type="MeshInstance3D" parent="Hollow"]
+position = Vector3(2.4, 0.17, -12)
+scale = Vector3(0.48, 0.44, 0.55)
+rotation_degrees = Vector3(8, 0, 10)
+mesh = SubResource("Chip")
+
+[node name="TrailRune0" type="MeshInstance3D" parent="Hollow"]
+position = Vector3(2.4, 0.38, -12)
+scale = Vector3(0.52, 0.52, 0.52)
+rotation_degrees = Vector3(0, 0, 0)
+mesh = SubResource("Sigil")
+
+[node name="TrailStone1" type="MeshInstance3D" parent="Hollow"]
+position = Vector3(-0.9, 0.17, -16)
+scale = Vector3(0.48, 0.44, 0.55)
+rotation_degrees = Vector3(8, 48, 10)
+mesh = SubResource("Chip")
+
+[node name="TrailRune1" type="MeshInstance3D" parent="Hollow"]
+position = Vector3(-0.9, 0.38, -16)
+scale = Vector3(0.52, 0.52, 0.52)
+rotation_degrees = Vector3(0, 0, 0)
+mesh = SubResource("Sigil")
+
+[node name="TrailStone2" type="MeshInstance3D" parent="Hollow"]
+position = Vector3(1.9, 0.17, -28)
+scale = Vector3(0.48, 0.44, 0.55)
+rotation_degrees = Vector3(8, 96, 10)
+mesh = SubResource("Chip")
+
+[node name="TrailRune2" type="MeshInstance3D" parent="Hollow"]
+position = Vector3(1.9, 0.38, -28)
+scale = Vector3(0.52, 0.52, 0.52)
+rotation_degrees = Vector3(0, 0, 0)
+mesh = SubResource("Sigil")
+
+[node name="TrailStone3" type="MeshInstance3D" parent="Hollow"]
+position = Vector3(3.2, 0.17, -34)
+scale = Vector3(0.48, 0.44, 0.55)
+rotation_degrees = Vector3(8, 144, 10)
+mesh = SubResource("Chip")
+
+[node name="TrailRune3" type="MeshInstance3D" parent="Hollow"]
+position = Vector3(3.2, 0.38, -34)
+scale = Vector3(0.52, 0.52, 0.52)
+rotation_degrees = Vector3(0, 0, 0)
+mesh = SubResource("Sigil")
+
+[node name="TrailStone4" type="MeshInstance3D" parent="Hollow"]
+position = Vector3(-0.4, 0.17, -38)
+scale = Vector3(0.48, 0.44, 0.55)
+rotation_degrees = Vector3(8, 192, 10)
+mesh = SubResource("Chip")
+
+[node name="TrailRune4" type="MeshInstance3D" parent="Hollow"]
+position = Vector3(-0.4, 0.38, -38)
+scale = Vector3(0.52, 0.52, 0.52)
+rotation_degrees = Vector3(0, 0, 0)
+mesh = SubResource("Sigil")
+
+[node name="Mist" type="Node3D" parent="."]
+
+[node name="GateHaze" type="FogVolume" parent="Mist"]
+position = Vector3(0, 0.68, -11)
+shape = 0
+size = Vector3(19, 2.4, 11)
+material = SubResource("HollowMist")
+
+[node name="ScannedProps" type="Node3D" parent="."]
+
+[node name="GateBoulderBody" type="StaticBody3D" parent="ScannedProps"]
+position = Vector3(4.55, 0.40, -13.7)
+
+[node name="Collider" type="CollisionShape3D" parent="ScannedProps/GateBoulderBody"]
+shape = SubResource("BoulderCollider")
+
+[node name="NorthBoulderBody" type="StaticBody3D" parent="ScannedProps"]
+position = Vector3(-8.2, 0.47, -26.1)
+
+[node name="Collider" type="CollisionShape3D" parent="ScannedProps/NorthBoulderBody"]
+shape = SubResource("BoulderCollider")
+
+[node name="SouthBoulderBody" type="StaticBody3D" parent="ScannedProps"]
+position = Vector3(3.0, 0.60, -47.8)
+
+[node name="Collider" type="CollisionShape3D" parent="ScannedProps/SouthBoulderBody"]
+shape = SubResource("BoulderCollider")
+
+[node name="CampStump" parent="ScannedProps" instance=ExtResource("ScanStump")]
+position = Vector3(-5.5, -0.02, 3.0)
+rotation_degrees = Vector3(0, 31, 0)
+scale = Vector3(1.4, 1.4, 1.4)
+
+[node name="GateRoots" parent="ScannedProps" instance=ExtResource("ScanRoots")]
+position = Vector3(-3.65, 0.015, -9.2)
+rotation_degrees = Vector3(0, 17, 0)
+scale = Vector3(1.15, 1.15, 1.15)
+
+[node name="GateBoulder" parent="ScannedProps" instance=ExtResource("ScanBoulder")]
+position = Vector3(4.7, -0.24, -13.7)
+rotation_degrees = Vector3(0, 47, 0)
+scale = Vector3(2.1, 2.1, 2.1)
+
+[node name="NorthSlope" parent="ScannedProps" instance=ExtResource("ScanRockfall")]
+position = Vector3(-10.7, -0.12, -20.2)
+rotation_degrees = Vector3(0, -16, 0)
+scale = Vector3(1.02, 1.02, 1.02)
+
+[node name="NorthBoulder" parent="ScannedProps" instance=ExtResource("ScanBoulder")]
+position = Vector3(-8.2, -0.09, -26.1)
+rotation_degrees = Vector3(0, 131, 0)
+scale = Vector3(1.8, 1.8, 1.8)
+
+[node name="RivenRoots" parent="ScannedProps" instance=ExtResource("ScanRoots")]
+position = Vector3(3.5, 0.006, -29.7)
+rotation_degrees = Vector3(0, -84, 0)
+scale = Vector3(1.37, 1.37, 1.37)
+
+[node name="HollowStump" parent="ScannedProps" instance=ExtResource("ScanStump")]
+position = Vector3(6.7, 0.0, -33.4)
+rotation_degrees = Vector3(0, -74, 0)
+scale = Vector3(1.7, 1.7, 1.7)
+
+[node name="SouthSlope" parent="ScannedProps" instance=ExtResource("ScanRockfall")]
+position = Vector3(13.4, -0.18, -43.1)
+rotation_degrees = Vector3(0, 67, 0)
+scale = Vector3(1.16, 1.16, 1.16)
+
+[node name="SouthBoulder" parent="ScannedProps" instance=ExtResource("ScanBoulder")]
+position = Vector3(3.0, -0.18, -47.8)
+rotation_degrees = Vector3(0, -47, 0)
+scale = Vector3(2.4, 2.4, 2.4)
+
+[node name="SouthRoots" parent="ScannedProps" instance=ExtResource("ScanRoots")]
+position = Vector3(-2.7, 0.008, -49.8)
+rotation_degrees = Vector3(0, 14, 0)
+scale = Vector3(2.0, 2.0, 2.0)

@@ -1,0 +1,695 @@
+[gd_scene load_steps=46 format=3]
+
+[ext_resource type="Script" path="res://src/world/gyms/lina_gym.gd" id="1"]
+[ext_resource type="PackedScene" path="res://src/player/lina.tscn" id="2"]
+[ext_resource type="PackedScene" path="res://src/ui/lina_gym_hud.tscn" id="3"]
+[ext_resource type="Script" path="res://addons/phantom_camera/scripts/phantom_camera/phantom_camera_3d.gd" id="4"]
+[ext_resource type="Script" path="res://addons/phantom_camera/scripts/phantom_camera_host/phantom_camera_host.gd" id="5"]
+
+[ext_resource type="Environment" path="res://src/resources/realistic_env.tres" id="6_environment"]
+[ext_resource type="Shader" path="res://assets/textures/arena_stone.gdshader" id="7_stone"]
+
+[sub_resource type="ShaderMaterial" id="FloorStone"]
+shader = ExtResource("7_stone")
+shader_parameter/stone_color = Color(0.34, 0.345, 0.37, 1)
+shader_parameter/grout_color = Color(0.15, 0.153, 0.17, 1)
+shader_parameter/block_size = Vector2(1.43, 1.04)
+shader_parameter/relief = 0.021
+
+[sub_resource type="ShaderMaterial" id="DarkStone"]
+shader = ExtResource("7_stone")
+shader_parameter/stone_color = Color(0.265, 0.28, 0.30, 1)
+shader_parameter/grout_color = Color(0.12, 0.135, 0.15, 1)
+shader_parameter/block_size = Vector2(1.24, 0.42)
+shader_parameter/relief = 0.032
+
+[sub_resource type="ShaderMaterial" id="CutStone"]
+shader = ExtResource("7_stone")
+shader_parameter/stone_color = Color(0.37, 0.345, 0.32, 1)
+shader_parameter/grout_color = Color(0.17, 0.155, 0.14, 1)
+shader_parameter/block_size = Vector2(0.84, 0.45)
+shader_parameter/relief = 0.026
+
+[sub_resource type="ShaderMaterial" id="Runway"]
+shader = ExtResource("7_stone")
+shader_parameter/stone_color = Color(0.25, 0.29, 0.305, 1)
+shader_parameter/grout_color = Color(0.118, 0.145, 0.16, 1)
+shader_parameter/block_size = Vector2(0.86, 0.77)
+shader_parameter/relief = 0.014
+
+[sub_resource type="StandardMaterial3D" id="Mint"]
+albedo_color = Color(0.32, 0.54, 0.47, 1)
+metallic = 0.48
+roughness = 0.62
+emission_enabled = true
+emission = Color(0.25, 0.53, 0.43, 1)
+emission_energy_multiplier = 0.2
+
+[sub_resource type="StandardMaterial3D" id="Copper"]
+albedo_color = Color(0.57, 0.36, 0.20, 1)
+metallic = 0.82
+roughness = 0.46
+
+[sub_resource type="StandardMaterial3D" id="TargetDark"]
+albedo_color = Color(0.19, 0.12, 0.082, 1)
+roughness = 0.86
+
+[sub_resource type="StandardMaterial3D" id="TargetPale"]
+albedo_color = Color(0.67, 0.54, 0.33, 1)
+roughness = 0.8
+
+[sub_resource type="SphereShape3D" id="CameraShape"]
+radius = 0.18
+
+[sub_resource type="BoxMesh" id="Floor"]
+material = SubResource("FloorStone")
+size = Vector3(34, 0.5, 28)
+
+[sub_resource type="BoxShape3D" id="FloorShape"]
+size = Vector3(34, 0.5, 28)
+
+[sub_resource type="BoxMesh" id="FrontWall"]
+material = SubResource("DarkStone")
+size = Vector3(34, 1.5, 0.5)
+
+[sub_resource type="BoxShape3D" id="FrontWallShape"]
+size = Vector3(34, 1.5, 0.5)
+
+[sub_resource type="BoxMesh" id="SideWall"]
+material = SubResource("DarkStone")
+size = Vector3(0.5, 1.5, 28)
+
+[sub_resource type="BoxShape3D" id="SideWallShape"]
+size = Vector3(0.5, 1.5, 28)
+
+[sub_resource type="BoxMesh" id="SlalomPillar"]
+material = SubResource("CutStone")
+size = Vector3(0.85, 2.7, 0.85)
+
+[sub_resource type="BoxShape3D" id="SlalomPillarShape"]
+size = Vector3(0.85, 2.7, 0.85)
+
+[sub_resource type="BoxMesh" id="PillarCap"]
+material = SubResource("Copper")
+size = Vector3(1.02, 0.13, 1.02)
+
+[sub_resource type="BoxMesh" id="Track"]
+material = SubResource("Runway")
+size = Vector3(6, 0.025, 21.4)
+
+[sub_resource type="BoxMesh" id="TrackEdge"]
+material = SubResource("Mint")
+size = Vector3(0.085, 0.036, 21.4)
+
+[sub_resource type="BoxMesh" id="TrackTick"]
+material = SubResource("Mint")
+size = Vector3(0.62, 0.043, 0.085)
+
+[sub_resource type="BoxMesh" id="CrossLine"]
+material = SubResource("Mint")
+size = Vector3(5.96, 0.045, 0.09)
+
+[sub_resource type="BoxMesh" id="ArchBeam"]
+material = SubResource("CutStone")
+size = Vector3(7.8, 0.55, 0.82)
+
+[sub_resource type="BoxMesh" id="ArchInset"]
+material = SubResource("Mint")
+size = Vector3(6.35, 0.09, 0.075)
+
+[sub_resource type="BoxMesh" id="TargetRail"]
+material = SubResource("CutStone")
+size = Vector3(6.35, 0.12, 0.85)
+
+[sub_resource type="BoxMesh" id="RangeBorder"]
+material = SubResource("Copper")
+size = Vector3(6.35, 0.045, 0.08)
+
+[sub_resource type="CylinderMesh" id="Disk0"]
+material = SubResource("TargetDark")
+top_radius = 0.78
+bottom_radius = 0.78
+height = 0.13
+radial_segments = 32
+
+[sub_resource type="CylinderMesh" id="Disk1"]
+material = SubResource("Copper")
+top_radius = 0.6
+bottom_radius = 0.6
+height = 0.045
+radial_segments = 32
+
+[sub_resource type="CylinderMesh" id="Disk2"]
+material = SubResource("TargetDark")
+top_radius = 0.42
+bottom_radius = 0.42
+height = 0.045
+radial_segments = 32
+
+[sub_resource type="CylinderMesh" id="Disk3"]
+material = SubResource("TargetPale")
+top_radius = 0.25
+bottom_radius = 0.25
+height = 0.045
+radial_segments = 32
+
+[sub_resource type="CylinderMesh" id="Disk4"]
+material = SubResource("Mint")
+top_radius = 0.105
+bottom_radius = 0.105
+height = 0.045
+radial_segments = 32
+
+[sub_resource type="StandardMaterial3D" id="SlateEarth"]
+albedo_color = Color(0.16, 0.175, 0.188, 1)
+roughness = 0.96
+
+[sub_resource type="BoxMesh" id="OutcropGround"]
+material = SubResource("SlateEarth")
+size = Vector3(150, 2, 150)
+
+[sub_resource type="BoxMesh" id="RuinedPier"]
+material = SubResource("DarkStone")
+size = Vector3(2.0, 6.2, 1.4)
+
+[sub_resource type="BoxMesh" id="RuinedWall"]
+material = SubResource("DarkStone")
+size = Vector3(7.0, 3.6, 1.1)
+
+[sub_resource type="StandardMaterial3D" id="Ember"]
+albedo_color = Color(0.68, 0.26, 0.07, 1)
+emission_enabled = true
+emission = Color(1, 0.35, 0.08, 1)
+emission_energy_multiplier = 3.0
+
+[sub_resource type="SphereMesh" id="BrazierEmber"]
+material = SubResource("Ember")
+radius = 0.13
+height = 0.16
+radial_segments = 12
+rings = 6
+
+[sub_resource type="CylinderMesh" id="BrazierBowl"]
+material = SubResource("Copper")
+top_radius = 0.25
+bottom_radius = 0.12
+height = 0.15
+radial_segments = 12
+
+[node name="LinaGym" type="Node3D"]
+script = ExtResource("1")
+
+[node name="Environment" type="WorldEnvironment" parent="."]
+environment = ExtResource("6_environment")
+
+[node name="Moon" type="DirectionalLight3D" parent="."]
+rotation_degrees = Vector3(-36, -127, 0)
+light_color = Color(0.66, 0.77, 1, 1)
+light_energy = 1.2
+light_volumetric_fog_energy = 0.65
+shadow_enabled = true
+directional_shadow_max_distance = 42.0
+
+[node name="EntranceLight" type="OmniLight3D" parent="."]
+position = Vector3(-2.4, 2.35, 9.3)
+light_color = Color(1, 0.56, 0.31, 1)
+light_energy = 2.4
+light_volumetric_fog_energy = 0.8
+omni_range = 7.5
+omni_attenuation = 1.6
+
+[node name="ArchLight" type="OmniLight3D" parent="."]
+position = Vector3(-3.54, 2.94, -10.42)
+light_color = Color(1, 0.57, 0.31, 1)
+light_energy = 2.25
+light_volumetric_fog_energy = 1.1
+omni_range = 7.0
+omni_attenuation = 1.5
+
+[node name="ArchRightLight" type="OmniLight3D" parent="."]
+position = Vector3(3.54, 2.94, -10.42)
+light_color = Color(1, 0.57, 0.31, 1)
+light_energy = 2.25
+light_volumetric_fog_energy = 1.1
+omni_range = 7.0
+omni_attenuation = 1.5
+
+[node name="Backdrop" type="Node3D" parent="."]
+
+[node name="Ground" type="MeshInstance3D" parent="Backdrop"]
+position = Vector3(0, -1.14, -27)
+mesh = SubResource("OutcropGround")
+gi_mode = 0
+
+[node name="WesternPier" type="MeshInstance3D" parent="Backdrop"]
+position = Vector3(-15, 2.65, -20)
+rotation_degrees = Vector3(0, 13, 3)
+mesh = SubResource("RuinedPier")
+
+[node name="WesternWall" type="MeshInstance3D" parent="Backdrop"]
+position = Vector3(-10.8, 1.6, -21)
+rotation_degrees = Vector3(0, 13, -5)
+mesh = SubResource("RuinedWall")
+
+[node name="WesternStub" type="MeshInstance3D" parent="Backdrop"]
+position = Vector3(-7, 1.9, -22)
+rotation_degrees = Vector3(0, 8, 5)
+scale = Vector3(0.86, 0.64, 1.08)
+mesh = SubResource("RuinedPier")
+
+[node name="EasternPier" type="MeshInstance3D" parent="Backdrop"]
+position = Vector3(10.8, 2.9, -23)
+rotation_degrees = Vector3(0, -18, -3)
+mesh = SubResource("RuinedPier")
+
+[node name="EasternWall" type="MeshInstance3D" parent="Backdrop"]
+position = Vector3(15.1, 1.56, -21.6)
+rotation_degrees = Vector3(0, -18, 4)
+mesh = SubResource("RuinedWall")
+
+[node name="EasternStub" type="MeshInstance3D" parent="Backdrop"]
+position = Vector3(18.9, 2.08, -20.35)
+rotation_degrees = Vector3(0, -21, 2)
+scale = Vector3(0.93, 0.72, 1)
+mesh = SubResource("RuinedPier")
+
+[node name="Spawn" type="Marker3D" parent="."]
+position = Vector3(0, 0.10, 8)
+
+[node name="Lina" parent="." instance=ExtResource("2")]
+position = Vector3(0, 0.10, 8)
+
+[node name="PhantomCamera" type="Node3D" parent="." node_paths=PackedStringArray("follow_target")]
+position = Vector3(0.52, 2.72, 13)
+script = ExtResource("4")
+priority = 10
+follow_mode = 6
+follow_target = NodePath("../Lina")
+follow_offset = Vector3(0.52, 1.54, 0)
+follow_distance = 5.5
+spring_length = 5.5
+shape = SubResource("CameraShape")
+margin = 0.08
+tween_on_load = false
+
+[node name="Camera" type="Camera3D" parent="."]
+position = Vector3(0.52, 2.72, 13)
+rotation_degrees = Vector3(-12, 0, 0)
+current = true
+fov = 70.0
+
+[node name="PhantomCameraHost" type="Node" parent="Camera"]
+process_priority = 300
+process_physics_priority = 300
+script = ExtResource("5")
+
+[node name="Course" type="Node3D" parent="."]
+
+
+[node name="Floor" type="StaticBody3D" parent="Course"]
+position = Vector3(0, -0.25, 0)
+collision_mask = 0
+
+[node name="Mesh" type="MeshInstance3D" parent="Course/Floor"]
+position = Vector3(0, 0, 0)
+mesh = SubResource("Floor")
+
+[node name="Collider" type="CollisionShape3D" parent="Course/Floor"]
+shape = SubResource("FloorShape")
+
+[node name="NorthWall" type="StaticBody3D" parent="Course"]
+position = Vector3(0, 0.74, -13.75)
+collision_mask = 0
+
+[node name="Mesh" type="MeshInstance3D" parent="Course/NorthWall"]
+position = Vector3(0, 0, 0)
+mesh = SubResource("FrontWall")
+
+[node name="Collider" type="CollisionShape3D" parent="Course/NorthWall"]
+shape = SubResource("FrontWallShape")
+
+[node name="SouthWall" type="StaticBody3D" parent="Course"]
+position = Vector3(0, 0.74, 13.75)
+collision_mask = 0
+
+[node name="Mesh" type="MeshInstance3D" parent="Course/SouthWall"]
+position = Vector3(0, 0, 0)
+mesh = SubResource("FrontWall")
+
+[node name="Collider" type="CollisionShape3D" parent="Course/SouthWall"]
+shape = SubResource("FrontWallShape")
+
+[node name="WestWall" type="StaticBody3D" parent="Course"]
+position = Vector3(-16.75, 0.74, 0)
+collision_mask = 0
+
+[node name="Mesh" type="MeshInstance3D" parent="Course/WestWall"]
+position = Vector3(0, 0, 0)
+mesh = SubResource("SideWall")
+
+[node name="Collider" type="CollisionShape3D" parent="Course/WestWall"]
+shape = SubResource("SideWallShape")
+
+[node name="EastWall" type="StaticBody3D" parent="Course"]
+position = Vector3(16.75, 0.74, 0)
+collision_mask = 0
+
+[node name="Mesh" type="MeshInstance3D" parent="Course/EastWall"]
+position = Vector3(0, 0, 0)
+mesh = SubResource("SideWall")
+
+[node name="Collider" type="CollisionShape3D" parent="Course/EastWall"]
+shape = SubResource("SideWallShape")
+
+[node name="TrackBed" type="MeshInstance3D" parent="Course"]
+position = Vector3(0, 0, 0)
+mesh = SubResource("Track")
+
+[node name="WestEdge" type="MeshInstance3D" parent="Course"]
+position = Vector3(-3, 0, 0)
+mesh = SubResource("TrackEdge")
+
+[node name="EastEdge" type="MeshInstance3D" parent="Course"]
+position = Vector3(3, 0, 0)
+mesh = SubResource("TrackEdge")
+
+[node name="WestTick0" type="MeshInstance3D" parent="Course"]
+position = Vector3(-2.67, 0, 8)
+mesh = SubResource("TrackTick")
+
+[node name="EastTick0" type="MeshInstance3D" parent="Course"]
+position = Vector3(2.67, 0, 8)
+mesh = SubResource("TrackTick")
+
+[node name="WestTick1" type="MeshInstance3D" parent="Course"]
+position = Vector3(-2.67, 0, 6)
+mesh = SubResource("TrackTick")
+
+[node name="EastTick1" type="MeshInstance3D" parent="Course"]
+position = Vector3(2.67, 0, 6)
+mesh = SubResource("TrackTick")
+
+[node name="WestTick2" type="MeshInstance3D" parent="Course"]
+position = Vector3(-2.67, 0, 4)
+mesh = SubResource("TrackTick")
+
+[node name="EastTick2" type="MeshInstance3D" parent="Course"]
+position = Vector3(2.67, 0, 4)
+mesh = SubResource("TrackTick")
+
+[node name="WestTick3" type="MeshInstance3D" parent="Course"]
+position = Vector3(-2.67, 0, 2)
+mesh = SubResource("TrackTick")
+
+[node name="EastTick3" type="MeshInstance3D" parent="Course"]
+position = Vector3(2.67, 0, 2)
+mesh = SubResource("TrackTick")
+
+[node name="WestTick4" type="MeshInstance3D" parent="Course"]
+position = Vector3(-2.67, 0, 0)
+mesh = SubResource("TrackTick")
+
+[node name="EastTick4" type="MeshInstance3D" parent="Course"]
+position = Vector3(2.67, 0, 0)
+mesh = SubResource("TrackTick")
+
+[node name="WestTick5" type="MeshInstance3D" parent="Course"]
+position = Vector3(-2.67, 0, -2)
+mesh = SubResource("TrackTick")
+
+[node name="EastTick5" type="MeshInstance3D" parent="Course"]
+position = Vector3(2.67, 0, -2)
+mesh = SubResource("TrackTick")
+
+[node name="WestTick6" type="MeshInstance3D" parent="Course"]
+position = Vector3(-2.67, 0, -4)
+mesh = SubResource("TrackTick")
+
+[node name="EastTick6" type="MeshInstance3D" parent="Course"]
+position = Vector3(2.67, 0, -4)
+mesh = SubResource("TrackTick")
+
+[node name="WestTick7" type="MeshInstance3D" parent="Course"]
+position = Vector3(-2.67, 0, -6)
+mesh = SubResource("TrackTick")
+
+[node name="EastTick7" type="MeshInstance3D" parent="Course"]
+position = Vector3(2.67, 0, -6)
+mesh = SubResource("TrackTick")
+
+[node name="WestTick8" type="MeshInstance3D" parent="Course"]
+position = Vector3(-2.67, 0, -8)
+mesh = SubResource("TrackTick")
+
+[node name="EastTick8" type="MeshInstance3D" parent="Course"]
+position = Vector3(2.67, 0, -8)
+mesh = SubResource("TrackTick")
+
+[node name="WestTick9" type="MeshInstance3D" parent="Course"]
+position = Vector3(-2.67, 0, -10)
+mesh = SubResource("TrackTick")
+
+[node name="EastTick9" type="MeshInstance3D" parent="Course"]
+position = Vector3(2.67, 0, -10)
+mesh = SubResource("TrackTick")
+
+[node name="Line0" type="MeshInstance3D" parent="Course"]
+position = Vector3(0, 0, 8)
+mesh = SubResource("CrossLine")
+
+[node name="Distance0" type="Label3D" parent="Course"]
+position = Vector3(3.48, 0.52, 8)
+modulate = Color(0.76, 0.95, 0.9, 1)
+outline_modulate = Color(0.05, 0.10, 0.11, 1)
+font_size = 48
+outline_size = 9
+pixel_size = 0.008
+text = "0 м"
+
+[node name="Line1" type="MeshInstance3D" parent="Course"]
+position = Vector3(0, 0, 3)
+mesh = SubResource("CrossLine")
+
+[node name="Distance1" type="Label3D" parent="Course"]
+position = Vector3(3.48, 0.52, 3)
+modulate = Color(0.76, 0.95, 0.9, 1)
+outline_modulate = Color(0.05, 0.10, 0.11, 1)
+font_size = 48
+outline_size = 9
+pixel_size = 0.008
+text = "5 м"
+
+[node name="Line2" type="MeshInstance3D" parent="Course"]
+position = Vector3(0, 0, -2)
+mesh = SubResource("CrossLine")
+
+[node name="Distance2" type="Label3D" parent="Course"]
+position = Vector3(3.48, 0.52, -2)
+modulate = Color(0.76, 0.95, 0.9, 1)
+outline_modulate = Color(0.05, 0.10, 0.11, 1)
+font_size = 48
+outline_size = 9
+pixel_size = 0.008
+text = "10 м"
+
+[node name="Line3" type="MeshInstance3D" parent="Course"]
+position = Vector3(0, 0, -7)
+mesh = SubResource("CrossLine")
+
+[node name="Distance3" type="Label3D" parent="Course"]
+position = Vector3(3.48, 0.52, -7)
+modulate = Color(0.76, 0.95, 0.9, 1)
+outline_modulate = Color(0.05, 0.10, 0.11, 1)
+font_size = 48
+outline_size = 9
+pixel_size = 0.008
+text = "15 м"
+
+[node name="Slalom0" type="StaticBody3D" parent="Course"]
+position = Vector3(-8, 1.35, 6)
+collision_mask = 0
+
+[node name="Mesh" type="MeshInstance3D" parent="Course/Slalom0"]
+position = Vector3(0, 0, 0)
+mesh = SubResource("SlalomPillar")
+
+[node name="Collider" type="CollisionShape3D" parent="Course/Slalom0"]
+shape = SubResource("SlalomPillarShape")
+
+[node name="Cap0" type="MeshInstance3D" parent="Course"]
+position = Vector3(-8, 2.73, 6)
+mesh = SubResource("PillarCap")
+
+[node name="Slalom1" type="StaticBody3D" parent="Course"]
+position = Vector3(-10, 1.35, 2)
+collision_mask = 0
+
+[node name="Mesh" type="MeshInstance3D" parent="Course/Slalom1"]
+position = Vector3(0, 0, 0)
+mesh = SubResource("SlalomPillar")
+
+[node name="Collider" type="CollisionShape3D" parent="Course/Slalom1"]
+shape = SubResource("SlalomPillarShape")
+
+[node name="Cap1" type="MeshInstance3D" parent="Course"]
+position = Vector3(-10, 2.73, 2)
+mesh = SubResource("PillarCap")
+
+[node name="Slalom2" type="StaticBody3D" parent="Course"]
+position = Vector3(-8, 1.35, -2)
+collision_mask = 0
+
+[node name="Mesh" type="MeshInstance3D" parent="Course/Slalom2"]
+position = Vector3(0, 0, 0)
+mesh = SubResource("SlalomPillar")
+
+[node name="Collider" type="CollisionShape3D" parent="Course/Slalom2"]
+shape = SubResource("SlalomPillarShape")
+
+[node name="Cap2" type="MeshInstance3D" parent="Course"]
+position = Vector3(-8, 2.73, -2)
+mesh = SubResource("PillarCap")
+
+[node name="Slalom3" type="StaticBody3D" parent="Course"]
+position = Vector3(-10, 1.35, -6)
+collision_mask = 0
+
+[node name="Mesh" type="MeshInstance3D" parent="Course/Slalom3"]
+position = Vector3(0, 0, 0)
+mesh = SubResource("SlalomPillar")
+
+[node name="Collider" type="CollisionShape3D" parent="Course/Slalom3"]
+shape = SubResource("SlalomPillarShape")
+
+[node name="Cap3" type="MeshInstance3D" parent="Course"]
+position = Vector3(-10, 2.73, -6)
+mesh = SubResource("PillarCap")
+
+[node name="Slalom4" type="StaticBody3D" parent="Course"]
+position = Vector3(-8, 1.35, -10)
+collision_mask = 0
+
+[node name="Mesh" type="MeshInstance3D" parent="Course/Slalom4"]
+position = Vector3(0, 0, 0)
+mesh = SubResource("SlalomPillar")
+
+[node name="Collider" type="CollisionShape3D" parent="Course/Slalom4"]
+shape = SubResource("SlalomPillarShape")
+
+[node name="Cap4" type="MeshInstance3D" parent="Course"]
+position = Vector3(-8, 2.73, -10)
+mesh = SubResource("PillarCap")
+
+[node name="ArchLeft" type="StaticBody3D" parent="Course"]
+position = Vector3(-3.54, 1.35, -10.8)
+collision_mask = 0
+
+[node name="Mesh" type="MeshInstance3D" parent="Course/ArchLeft"]
+position = Vector3(0, 0, 0)
+mesh = SubResource("SlalomPillar")
+
+[node name="Collider" type="CollisionShape3D" parent="Course/ArchLeft"]
+shape = SubResource("SlalomPillarShape")
+
+[node name="ArchRight" type="StaticBody3D" parent="Course"]
+position = Vector3(3.54, 1.35, -10.8)
+collision_mask = 0
+
+[node name="Mesh" type="MeshInstance3D" parent="Course/ArchRight"]
+position = Vector3(0, 0, 0)
+mesh = SubResource("SlalomPillar")
+
+[node name="Collider" type="CollisionShape3D" parent="Course/ArchRight"]
+shape = SubResource("SlalomPillarShape")
+
+[node name="Lintel" type="MeshInstance3D" parent="Course"]
+position = Vector3(0, 2.91, -10.8)
+mesh = SubResource("ArchBeam")
+
+[node name="LintelLight" type="MeshInstance3D" parent="Course"]
+position = Vector3(0, 2.7, -10.36)
+mesh = SubResource("ArchInset")
+
+[node name="SlalomSign" type="Label3D" parent="Course"]
+position = Vector3(-9, 3.6, -11.5)
+modulate = Color(0.94, 0.68, 0.4, 1)
+outline_modulate = Color(0.05, 0.10, 0.11, 1)
+font_size = 48
+outline_size = 9
+pixel_size = 0.008
+text = "СЛАЛОМ"
+
+[node name="TrackSign" type="Label3D" parent="Course"]
+position = Vector3(0, 3.55, -10.78)
+modulate = Color(0.76, 0.95, 0.9, 1)
+outline_modulate = Color(0.05, 0.10, 0.11, 1)
+font_size = 54
+outline_size = 9
+pixel_size = 0.008
+text = "БЕГ И РЫВОК"
+
+[node name="LeftBrazier" type="MeshInstance3D" parent="Course"]
+position = Vector3(-3.54, 2.64, -10.38)
+mesh = SubResource("BrazierBowl")
+
+[node name="LeftEmber" type="MeshInstance3D" parent="Course/LeftBrazier"]
+position = Vector3(0, 0.11, 0)
+mesh = SubResource("BrazierEmber")
+
+[node name="RightBrazier" type="MeshInstance3D" parent="Course"]
+position = Vector3(3.54, 2.64, -10.38)
+mesh = SubResource("BrazierBowl")
+
+[node name="RightEmber" type="MeshInstance3D" parent="Course/RightBrazier"]
+position = Vector3(0, 0.11, 0)
+mesh = SubResource("BrazierEmber")
+
+[node name="Range" type="Node3D" parent="."]
+position = Vector3(8.9, 0, -5.4)
+
+[node name="Rail" type="MeshInstance3D" parent="Range"]
+position = Vector3(0, 0.06, 0)
+mesh = SubResource("TargetRail")
+
+[node name="Line" type="MeshInstance3D" parent="Range"]
+position = Vector3(0, 0, 1.1)
+mesh = SubResource("RangeBorder")
+
+[node name="RangeSign" type="Label3D" parent="Range"]
+position = Vector3(0, 3.6, 0)
+modulate = Color(0.94, 0.68, 0.4, 1)
+outline_modulate = Color(0.05, 0.10, 0.11, 1)
+font_size = 48
+outline_size = 9
+pixel_size = 0.008
+text = "ПРИЦЕЛИВАНИЕ"
+
+[node name="MovingTarget" type="Node3D" parent="Range"]
+position = Vector3(0, 1.76, 0.4)
+
+[node name="Disk0" type="MeshInstance3D" parent="Range/MovingTarget"]
+position = Vector3(0, 0, 0)
+rotation_degrees = Vector3(90, 0, 0)
+mesh = SubResource("Disk0")
+
+[node name="Disk1" type="MeshInstance3D" parent="Range/MovingTarget"]
+position = Vector3(0, 0, 0.072)
+rotation_degrees = Vector3(90, 0, 0)
+mesh = SubResource("Disk1")
+
+[node name="Disk2" type="MeshInstance3D" parent="Range/MovingTarget"]
+position = Vector3(0, 0, 0.094)
+rotation_degrees = Vector3(90, 0, 0)
+mesh = SubResource("Disk2")
+
+[node name="Disk3" type="MeshInstance3D" parent="Range/MovingTarget"]
+position = Vector3(0, 0, 0.116)
+rotation_degrees = Vector3(90, 0, 0)
+mesh = SubResource("Disk3")
+
+[node name="Disk4" type="MeshInstance3D" parent="Range/MovingTarget"]
+position = Vector3(0, 0, 0.138)
+rotation_degrees = Vector3(90, 0, 0)
+mesh = SubResource("Disk4")
+
+[node name="LinaGymHud" parent="." instance=ExtResource("3")]

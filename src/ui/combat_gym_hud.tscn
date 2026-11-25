@@ -1,0 +1,106 @@
+[gd_scene load_steps=6 format=3]
+
+[ext_resource type="PackedScene" path="res://src/ui/lina_gym_hud.tscn" id="1"]
+[ext_resource type="Script" path="res://src/ui/combat_gym_hud.gd" id="2"]
+
+[sub_resource type="StyleBoxFlat" id="BarBackground"]
+bg_color = Color(0.15, 0.19, 0.21, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
+[sub_resource type="StyleBoxFlat" id="HealthFill"]
+bg_color = Color(0.58, 0.17, 0.21, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
+[sub_resource type="StyleBoxFlat" id="StaminaFill"]
+bg_color = Color(0.24, 0.55, 0.31, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
+[node name="CombatGymHud" instance=ExtResource("1")]
+script = ExtResource("2")
+
+[node name="Name" parent="Screen/Title/Content" index="0"]
+text = "Боевой зал Лины"
+
+[node name="Controls" parent="Screen/Title/Content" index="1"]
+text = "ПКМ + ЛКМ  Лук    ·    ЛКМ  Меч"
+
+[node name="HealthBar" type="ProgressBar" parent="Screen/Title/Content" index="2"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(245, 18)
+layout_mode = 2
+mouse_filter = 2
+theme_override_styles/background = SubResource("BarBackground")
+theme_override_styles/fill = SubResource("HealthFill")
+show_percentage = false
+
+[node name="Value" type="Label" parent="Screen/Title/Content/HealthBar"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+theme_override_colors/font_outline_color = Color(0.05, 0.07, 0.08, 1)
+theme_override_constants/outline_size = 3
+theme_override_font_sizes/font_size = 12
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="StaminaBar" type="ProgressBar" parent="Screen/Title/Content" index="3"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(245, 18)
+layout_mode = 2
+mouse_filter = 2
+theme_override_styles/background = SubResource("BarBackground")
+theme_override_styles/fill = SubResource("StaminaFill")
+show_percentage = false
+
+[node name="Value" type="Label" parent="Screen/Title/Content/StaminaBar"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+theme_override_colors/font_outline_color = Color(0.05, 0.07, 0.08, 1)
+theme_override_constants/outline_size = 3
+theme_override_font_sizes/font_size = 12
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Archery" type="Label" parent="Screen/Title/Content" index="4"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.94, 0.73, 0.44, 1)
+theme_override_font_sizes/font_size = 17
+
+[node name="OtherSkills" type="Label" parent="Screen/Title/Content" index="5"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.69, 0.76, 0.77, 1)
+theme_override_font_sizes/font_size = 14
+
+[node name="TuningPanel" parent="Screen" index="1"]
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -356.0
+offset_top = 22.0
+offset_right = -22.0
+grow_horizontal = 0
+
+[node name="Heading" parent="Screen/TuningPanel/Content" index="0"]
+text = "Настройки боя"
+
+[node name="SliderRows" parent="Screen/TuningPanel/Content" index="1"]
+theme_override_constants/separation = 3
+
+[node name="Keys" parent="Screen/Footer/Content" index="0"]
+text = "Tab  Настройки    ·    R  Сброс зала    ·    P  Сохранить"
+
+[node name="Notice" parent="Screen/Footer/Content" index="1"]
+text = "WASD  Бег  ·  Shift  Кувырок  ·  F  Блок  ·  Q / СКМ  Захват"

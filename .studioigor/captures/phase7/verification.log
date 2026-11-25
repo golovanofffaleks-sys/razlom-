@@ -1,0 +1,54 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+D3D12 12_0 - Forward+ - Using Device #0: NVIDIA - NVIDIA GeForce GTX 1650
+
+PASS Main scene is the menu
+PASS Start button loads outskirts_slice
+PASS Camp starts safe and waves await approach
+PASS Full HP preserves self-heal charges
+PASS R heals 35 HP and spends one charge
+PASS H maps to the same self-heal
+PASS Each heal adds 15 balance_magic XP
+PASS Altar restores health, stamina and all charges
+PASS Hunter opens Dialogue Manager conversation
+PASS Hunter introduces the two rifts
+PASS Opening conversation returns control without a moral choice
+PASS Pause screen shows
+PASS Resume button returns control
+PASS First wave spawned two live minions
+PASS Lina defeated a live minion with sword strikes
+PASS Lina defeated a live minion with sword strikes
+PASS Second wave spawned two live minions
+PASS Lina defeated a live minion with sword strikes
+PASS Lina defeated a live minion with sword strikes
+PASS Rift is sealable only after both waves
+PASS Holding E completes the real seal timer
+PASS North seal counts once and south rift waits for approach
+PASS First wave spawned two live minions
+PASS Lina defeated a live minion with sword strikes
+PASS Lina defeated a live minion with sword strikes
+PASS Second wave spawned two live minions
+PASS Lina defeated a live minion with sword strikes
+PASS Lina defeated a live minion with sword strikes
+PASS Rift is sealable only after both waves
+PASS Holding E completes the real seal timer
+PASS Both real spawners closed
+PASS Both choices are visible after both rifts close
+PASS Confession awards one redemption
+PASS Victory screen follows confession
+PASS Victory returns to menu
+PASS Start button loads outskirts_slice
+PASS New run clears world state
+PASS First wave spawned two live minions
+PASS Second wave spawned two live minions
+PASS Rift is sealable only after both waves
+PASS Holding E completes the real seal timer
+PASS First wave spawned two live minions
+PASS Second wave spawned two live minions
+PASS Rift is sealable only after both waves
+PASS Holding E completes the real seal timer
+PASS Lying awards thirty silver without redemption
+PASS Hunter choice is idempotent
+PASS Enemy strikes cause death and open the result screen
+PASS Death restart restores Lina and unpauses the game
+PHASE7 QA RESULT failures=0 graphics=true
+PASS Title menu Exit pressed

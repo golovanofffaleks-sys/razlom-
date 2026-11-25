@@ -1,0 +1,57 @@
+Hand attachments
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+D3D12 12_0 - Forward+ - Using Device #0: NVIDIA - NVIDIA GeForce GTX 1650
+
+Aim hand=LeftHand bone=70 exact attachment=true visibility=true
+Sword hand=RightHand bone=89 exact attachment=true visibility=true
+
+Combat gym
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+D3D12 12_0 - Forward+ - Using Device #0: NVIDIA - NVIDIA GeForce GTX 1650
+
+OK  оконный ввод активен
+OK  оружие скрыто в покое
+OK  клавиша 1 выбирает огонь
+OK  звук натяжения начался
+OK  ПКМ показывает лук
+OK  огонь окрашивает наконечник
+OK  ПКМ и ЛКМ выпускают огненную стрелу
+OK  свист стрелы запущен
+огненная стрела HP=73.6 / 100.0 / 100.0
+OK  попадание стрелой и поджог
+OK  поджог наносит периодический урон
+OK  лук скрывается после выстрела и отпускания ПКМ
+OK  клавиша 2 выбирает лёд
+OK  ЛКМ показывает меч
+OK  лёд подсвечивает лезвие
+OK  взмах запущен в ударной фазе
+меч HP=65.0 эффект=0.48
+OK  меч замедляет цель и наносит один удар
+OK  меч убран после восстановления
+OK  сброс манекена снимает лёд
+OK  клавиша 3 выбирает молнию
+цепь HP=65.0 / 79.0 / 86.35
+OK  молния перескакивает на две цели
+OK  стрела молнии летит в 1.55 раза быстрее
+OK  ветер окраин запущен и зациклен
+OK  гул Разлома запущен и зациклен
+OK  печать останавливает гул и запускает хлопок
+OK  сброс восстанавливает гул
+OK  HUD окраин показывает выбранную стихию
+Всего несоответствий: 0
+
+Outskirts
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+D3D12 12_0 - Forward+ - Using Device #0: NVIDIA - NVIDIA GeForce GTX 1650
+
+OK  сигнал ветра доходит до Master, peak 0.0758
+OK  ПКМ поднимает лук на окраинах
+OK  разлом выпускает первую волну
+OK  лёд снижает скорость приспешника 2.80 → 1.34 м/с
+OK  разлом выпускает вторую волну
+OK  Разлом уязвим, гул продолжает играть
+OK  удержание E запечатывает Разлом, останавливает гул и запускает хлопок
+Всего несоответствий: 0
+
+Godot MCP · outskirts_slice.tscn
+Godot 4.7.2, D3D12 Forward+ · errors: []
